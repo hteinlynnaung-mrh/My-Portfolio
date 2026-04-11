@@ -128,7 +128,7 @@ figure figcaption {
     -o-transform: translateX(-300px);
     transform: translateX(-300px);
     padding-top: 4em;
-    background-color: #f9bf3f;
+    background-color: #e7dd50;
     height: -webkit-fill-available;
     left: 0px;
   }
@@ -602,6 +602,25 @@ body.offcanvas .colorlib-nav-toggle {
 
 .progress-wrap h3 {
   padding-bottom: 2px;
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.skill-icon {
+  font-size: 24px;
+  color: #000;
+  transition: transform 0.3s ease;
+}
+
+.skill-item:hover .skill-icon {
+  transform: scale(1.2);
+  color: #f9bf3f;
 }
 
 @media screen and (max-width: 768px) {
@@ -1179,22 +1198,35 @@ strong {
   margin-bottom: 4px;
 }
 
-.badge-stack {
-  background-color: #f48024;
-  border: 1px solid #c66a17;
+.badge-linkedin {
+  background-color: #0077b5;
+  border: 1px solid #005a8a;
   color: #fff;
 }
 
-.badge-github {
+.badge-certificate {
+  background-color: #d4af37;
+  border: 1px solid #b8962e;
+  color: #000;
+}
+
+.btn-view-profile {
+  display: inline-block;
   background-color: #000;
-  border: 1px solid #333;
   color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none !important;
+  transition: all 0.3s ease;
+  border: 1px solid #000;
 }
 
-.badge-leetcode {
-  background-color: #ffc01e;
-  border: 1px solid #ffb300;
-  color: #111;
+.btn-view-profile:hover {
+  background-color: transparent;
+  color: #000;
+  transform: translateY(-2px);
 }
 
 .profile-url {

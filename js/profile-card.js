@@ -5,45 +5,37 @@ async function get(url) {
   return resp.json();
 }
 
-function stackCardTemplate(user) {
-  const {
-    profile_image,
-    link,
-    reputation,
-    badge_counts: { gold, silver, bronze },
-    user_id
-  } = user;
-
-  const username = link.replace("https://", "").replace(`/users/${user_id}`, "");
+function linkedinCardTemplate() {
+  const profileUrl = "https://www.linkedin.com/in/htein-software-engineer/";
   return html`
-    <a href="${link}" target="_blank" class="profile-card">
+    <div class="profile-card">
       <div class="profile-header">
-        <img
-          class="profile-avatar"
-          src="${profile_image}"
-          alt="StackOverflow avatar"
-        />
-        <div>
-          <div class="profile-badge badge-stack">StackOverflow</div>
-          <p class="profile-url">${username}</p>
+        <i class="fa-brands fa-linkedin" style="font-size: 40px; color: #0077b5;"></i>
+        <div class="profile-info">
+          <div class="profile-badge badge-linkedin">LinkedIn</div>
+          <p class="profile-name">Htein Lynn Aung</p>
+          <p class="profile-username">Software Engineering Student</p>
         </div>
       </div>
-      <div class="profile-stats">
-        ${[
-          { label: "REPUTATION", value: reputation },
-          { label: "GOLD", value: gold },
-          { label: "SILVER", value: silver },
-          { label: "BRONZE", value: bronze },
-        ].map(
-          (stat) => html`
-            <div>
-              <p class="stat-label">${stat.label}</p>
-              <p class="stat-value">${stat.value}</p>
-            </div>
-          `
-        )}
+      <div style="margin-top: 15px; text-align: center;">
+        <a href="${profileUrl}" target="_blank" class="btn-view-profile">View Profile</a>
       </div>
-    </a>
+    </div>
+  `;
+}
+
+function certificateCardTemplate() {
+  return html`
+    <div class="profile-card">
+      <div class="profile-header">
+        <i class="fa-solid fa-award" style="font-size: 40px; color: #d4af37;"></i>
+        <div class="profile-info">
+          <div class="profile-badge badge-certificate">Certificate</div>
+          <p class="profile-name" style="font-size: 14px;">ITPEC Fundamental IT Engineer (FE)</p>
+          <p class="profile-username">Issue Date: 2024</p>
+        </div>
+      </div>
+    </div>
   `;
 }
 
@@ -114,12 +106,12 @@ function leetcodeCardTemplate(data) {
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
-  document.querySelectorAll(".stack-card").forEach(async (el) => {
-    const userId = el.getAttribute("user-id");
-    const { items } = await get(
-      `https://api.stackexchange.com/2.2/users/${userId}?site=stackoverflow`
-    );
-    render(stackCardTemplate(items[0]), el);
+  document.querySelectorAll(".linkedin-card").forEach((el) => {
+    render(linkedinCardTemplate(), el);
+  });
+
+  document.querySelectorAll(".certificate-card").forEach((el) => {
+    render(certificateCardTemplate(), el);
   });
 
   document.querySelectorAll(".github-card").forEach(async (el) => {

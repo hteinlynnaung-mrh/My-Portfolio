@@ -16,7 +16,7 @@ async function fetchBlogsFromMedium(url) {
   try {
     const response = await fetch(url);
     const { items, feed } = await response.json();
-    document.getElementById("profile-img").src = feed.image;
+    // document.getElementById("profile-img").src = feed.image;
     populateBlogs(items, "blogs");
   } catch (error) {
     throw new Error(
@@ -84,7 +84,10 @@ function populateSkills(items, id) {
   const skillsTemplate = html` ${items.map(
     (item) => html` <div class="col-md-3 animate-box">
       <div class="progress-wrap">
-        <li class="skill-item">${item}</li>
+        <li class="skill-item">
+          <i class="${item.icon} skill-icon"></i>
+          ${item.name}
+        </li>
       </div>
     </div>`
   )}`;
