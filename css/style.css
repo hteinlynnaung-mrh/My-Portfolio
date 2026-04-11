@@ -145,6 +145,36 @@ figure figcaption {
   border-radius: 50%;
 }
 
+.lang-switcher {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 5px 10px;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+.lang-btn:hover {
+  color: #000;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.lang-divider {
+  color: rgba(0, 0, 0, 0.3);
+}
+
 #colorlib-aside .author-img img {
   height: 100%;
   object-fit: contain;

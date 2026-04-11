@@ -1,4 +1,5 @@
 import { html, render } from "https://unpkg.com/lit@latest?module";
+import { t } from "./i18n.js";
 
 async function get(url) {
   const resp = await fetch(url);
@@ -12,13 +13,13 @@ function linkedinCardTemplate() {
       <div class="profile-header">
         <i class="fa-brands fa-linkedin" style="font-size: 40px; color: #0077b5;"></i>
         <div class="profile-info">
-          <div class="profile-badge badge-linkedin">LinkedIn</div>
+          <div class="profile-badge badge-linkedin">${t("badge_linkedin")}</div>
           <p class="profile-name">Htein Lynn Aung</p>
           <p class="profile-username">Software Engineering Student</p>
         </div>
       </div>
       <div style="margin-top: 15px; text-align: center;">
-        <a href="${profileUrl}" target="_blank" class="btn-view-profile">View Profile</a>
+        <a href="${profileUrl}" target="_blank" class="btn-view-profile">${t("btn_view_profile")}</a>
       </div>
     </div>
   `;
@@ -30,9 +31,9 @@ function certificateCardTemplate() {
       <div class="profile-header">
         <i class="fa-solid fa-award" style="font-size: 40px; color: #d4af37;"></i>
         <div class="profile-info">
-          <div class="profile-badge badge-certificate">Certificate</div>
+          <div class="profile-badge badge-certificate">${t("badge_certificate")}</div>
           <p class="profile-name" style="font-size: 14px;">ITPEC Fundamental IT Engineer (FE)</p>
-          <p class="profile-username">Issue Date: 2024</p>
+          <p class="profile-username">${t("issue_date")}: 2024</p>
         </div>
       </div>
     </div>
@@ -47,15 +48,15 @@ function githubCardTemplate(user) {
       <div class="profile-header">
         <img class="profile-avatar" src="${avatar_url}" alt="GitHub avatar" />
         <div>
-          <div class="profile-badge badge-github">GitHub</div>
+          <div class="profile-badge badge-github">${t("badge_github")}</div>
           <p class="profile-url">${html_url}</p>
         </div>
       </div>
       <div class="profile-stats">
         ${[
-          { label: "REPOSITORIES", value: public_repos },
-          { label: "FOLLOWERS", value: followers },
-          { label: "FOLLOWING", value: following },
+          { label: t("github_stats_repos"), value: public_repos },
+          { label: t("github_stats_followers"), value: followers },
+          { label: t("github_stats_following"), value: following },
         ].map(
           (stat) => html`
             <div>
@@ -83,15 +84,15 @@ function leetcodeCardTemplate(data) {
           alt="LeetCode avatar"
         />
         <div>
-          <div class="profile-badge badge-leetcode">LeetCode</div>
+          <div class="profile-badge badge-leetcode">${t("badge_leetcode")}</div>
           <p class="profile-url">${leetUrl}</p>
         </div>
       </div>
       <div class="profile-stats">
         ${[
-          { label: "SOLVED", value: `${totalSolved}/${totalQuestions}` },
-          { label: "RANK", value: `#${ranking}` },
-          { label: "ACCEPTANCE", value: `${acceptanceRate}%` },
+          { label: t("leetcode_stats_solved"), value: `${totalSolved}/${totalQuestions}` },
+          { label: t("leetcode_stats_rank"), value: `#${ranking}` },
+          { label: t("leetcode_stats_acceptance"), value: `${acceptanceRate}%` },
         ].map(
           (stat) => html`
             <div>

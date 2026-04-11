@@ -57,6 +57,11 @@
           class="border js-fullheight no-print"
         >
           <div class="text-center">
+            <div class="lang-switcher no-print">
+              <button id="btn-en" class="lang-btn">EN</button>
+              <span class="lang-divider">|</span>
+              <button id="btn-jp" class="lang-btn">日本語</button>
+            </div>
             <div class="author-img">
               <img id="profile-img" src="./images/profile.png" alt="Htein Lynn Aung" />
             </div>
@@ -70,17 +75,17 @@
           >
             <div id="navbar" class="collapse">
               <ul>
-                <li><a href="#" data-nav-section="about">About</a></li>
-                <li><a href="#" data-nav-section="skills">Skills</a></li>
+                <li><a href="#" data-nav-section="about" data-i18n="menu_about">About</a></li>
+                <li><a href="#" data-nav-section="skills" data-i18n="menu_skills">Skills</a></li>
                 <li>
-                  <a href="#" data-nav-section="experience">Work Experience</a>
+                  <a href="#" data-nav-section="experience" data-i18n="menu_experience">Work Experience</a>
                 </li>
-                <li><a href="#" data-nav-section="education">Education</a></li>
+                <li><a href="#" data-nav-section="education" data-i18n="menu_education">Education</a></li>
                 <li>
-                  <a href="#" data-nav-section="repos">Top Repositories</a>
+                  <a href="#" data-nav-section="repos" data-i18n="menu_repos">Top Repositories</a>
                 </li>
-                <li><a href="#" data-nav-section="blogs">Blogs</a></li>
-                <li><a href="#" data-nav-section="contact">Contact</a></li>
+                <li><a href="#" data-nav-section="blogs" data-i18n="menu_blogs">Blogs</a></li>
+                <li><a href="#" data-nav-section="contact" data-i18n="menu_contact">Contact</a></li>
               </ul>
             </div>
           </nav>
@@ -90,7 +95,7 @@
             <div class="colorlib-narrow-content">
               <div class="row animate-box" data-animate-effect="fadeInLeft">
                 <div class="about-desc">
-                  <h1>About Me</h1>
+                  <h1 data-i18n="section_about">About Me</h1>
                   <div id="bio"></div>
                 </div>
               </div>
@@ -103,7 +108,7 @@
                 data-animate-effect="fadeInLeft"
               >
                 <div class="about-desc">
-                  <h1>Skills</h1>
+                  <h1 data-i18n="section_skills">Skills</h1>
                 </div>
               </div>
               <div id="skills" class="row"></div>
@@ -134,7 +139,7 @@
                 data-animate-effect="fadeInLeft"
               >
                 <div class="about-desc">
-                  <h1>Work <span style="color: #f9bf3f">Experience</span></h1>
+                  <h1><span data-i18n="section_experience_title">Work </span><span style="color: #f9bf3f" data-i18n="section_experience_subtitle">Experience</span></h1>
                 </div>
               </div>
               <div class="timeline-centered" id="experience"></div>
@@ -147,7 +152,7 @@
                 data-animate-effect="fadeInLeft"
               >
                 <div class="about-desc">
-                  <h1>Education</h1>
+                  <h1 data-i18n="section_education">Education</h1>
                 </div>
               </div>
               <div class="timeline-centered" id="education"></div>
@@ -165,14 +170,14 @@
                     target="_blank"
                     style="color: inherit"
                   >
-                    <h1>
-                      Top <span style="color: #f9bf3f">Repositories</span>
-                      <i
-                        class="fa fa-external-link"
-                        aria-hidden="true"
-                        style="font-size: 30px"
-                      ></i>
-                    </h1>
+                      <h1 >
+                        <span data-i18n="section_repos_title">Top </span><span style="color: #f9bf3f" data-i18n="section_repos_subtitle">Repositories</span>
+                        <i
+                          class="fa fa-external-link"
+                          aria-hidden="true"
+                          style="font-size: 30px"
+                        ></i>
+                      </h1>
                   </a>
                 </div>
               </div>
@@ -203,14 +208,14 @@
                     target="_blank"
                     style="color: inherit"
                   >
-                    <h1>
-                      Latest <span style="color: #f9bf3f">Blogs</span>
-                      <i
-                        class="fa fa-external-link"
-                        aria-hidden="true"
-                        style="font-size: 30px"
-                      ></i>
-                    </h1>
+                      <h1>
+                        <span data-i18n="section_blogs_title">Latest </span><span style="color: #f9bf3f" data-i18n="section_blogs_subtitle">Blogs</span>
+                        <i
+                          class="fa fa-external-link"
+                          aria-hidden="true"
+                          style="font-size: 30px"
+                        ></i>
+                      </h1>
                   </a>
                 </div>
               </div>
@@ -236,10 +241,10 @@
                 data-animate-effect="fadeInLeft"
               >
                 <div class="about-desc">
-                  <h1>Contact</h1>
+                  <h1 data-i18n="section_contact">Contact</h1>
                 </div>
-                <p>
-                  Feel free to email me at
+                <p data-i18n="contact_para">
+                   Feel free to email me at
                   <strong>hteinlynnaung.1111@gmail.com</strong> for tech
                   discussions, business opportunities, or just to say hello—I’d
                   love to hear from you!
@@ -250,8 +255,8 @@
           </section>
           <section class="colorlib-footer no-print">
             <div class="colorlib-narrow-content">
-              <span class="visitor-label">Total Visitors</span>
-              <span id="visitorCount" class="visitor-number">Loading...</span>
+              <span class="visitor-label" data-i18n="visitor_label">Total Visitors</span>
+              <span id="visitorCount" class="visitor-number" data-i18n="visitor_loading">Loading...</span>
             </div>
           </section>
           <section class="colorlib-footer no-print" data-section="footer">

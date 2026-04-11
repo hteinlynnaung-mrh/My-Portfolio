@@ -7,6 +7,7 @@ import {
   contactLinks,
 } from "./user-data/data.js";
 import { html, render } from "https://unpkg.com/lit-html?module";
+import { t, applyTranslations, setLanguage } from "./js/i18n.js";
 
 import { URLs } from "./user-data/urls.js";
 
@@ -305,22 +306,24 @@ function getBlogDate(publishDate) {
 
   if (elapsed < msPerMinute) {
     const seconds = Math.floor(elapsed / msPerSecond);
-    return `${seconds} seconds ago`;
+    return t("time_seconds_ago");
   } else if (elapsed < msPerHour) {
     const minutes = Math.floor(elapsed / msPerMinute);
-    return `${minutes} minutes ago`;
+    return `${minutes} ${t("time_minutes_ago")}`;
   } else if (elapsed < msPerDay) {
     const hours = Math.floor(elapsed / msPerHour);
-    return `${hours} hours ago`;
+    return `${hours} ${t("time_hours_ago")}`;
   } else if (elapsed < msPerMonth) {
     const days = Math.floor(elapsed / msPerDay);
-    return days == 1 ? `${days} day ago` : `${days} days ago`;
+    return days == 1 ? t("time_day_ago") : `${days} ${t("time_days_ago")}`;
   } else if (elapsed < msPerYear) {
     const months = Math.floor(elapsed / msPerMonth);
-    return months == 1 ? `${months} month ago` : `${months} months ago`;
+    return months == 1
+      ? t("time_month_ago")
+      : `${months} ${t("time_months_ago")}`;
   } else {
     const years = Math.floor(elapsed / msPerYear);
-    return years == 1 ? `${years} year ago` : `${years} years ago`;
+    return years == 1 ? t("time_year_ago") : `${years} ${t("time_years_ago")}`;
   }
 }
 
@@ -336,4 +339,13 @@ populateExp_Edu(experience, "experience");
 populateExp_Edu(education, "education");
 
 populateLinks(footer, "footer");
-populateContactLinks(contactLinks, 'contact-links');
+populateContactLinks(contactLinks, "contact-links");
+
+document
+  .getElementById("btn-en")
+  ?.addEventListener("click", () => setLanguage("en"));
+document
+  .getElementById("btn-jp")
+  ?.addEventListener("click", () => setLanguage("jp"));
+
+applyTranslations();
