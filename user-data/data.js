@@ -1,6 +1,6 @@
 const data ={
   "bio": [
-    "Hello, I’m Htein Lynn Aung, a Software Engineering student at North Chiang Mai University.Currently, I am deeply immersed in the fundamentals of Computer Science and the Software Development Life Cycle (SDLC). I believe that building great software starts with a strong architectural foundation and a clear understanding of the development process.My journey doesn't stop at development; I am highly motivated to expand my expertise into Cloud Engineering and DevOps. I am passionate about bridging the gap between code and infrastructure to build scalable, efficient, and automated systems."
+    "Hello, I’m Htein Lynn Aung, a Software Engineering student at North Chiang Mai University.Currently, I am deeply immersed in the fundamentals of Computer Science and the Software Development Life Cycle (SDLC). I believe that building great software starts with a strong architectural foundation and a clear understanding of the development process.My journey doesn't stop at development. I am highly motivated to expand my expertise into Cloud Engineering and DevOps. I am passionate about bridging the gap between code and infrastructure to build scalable, efficient, and automated systems."
  ],
   
   "skills": [
