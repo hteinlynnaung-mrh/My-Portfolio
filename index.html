@@ -36,26 +36,6 @@
     />
 
     <script src="js/modernizr-2.6.2.min.js"></script>
-    <script>
-      (function () {
-        const savedTheme = localStorage.getItem("theme");
-        const isDark =
-          savedTheme === "dark" ||
-          (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches);
-        if (isDark) {
-          document.documentElement.classList.add("dark-mode");
-        }
-        
-        // Update icon immediately when DOM is ready to prevent jump
-        document.addEventListener("DOMContentLoaded", () => {
-          const bodyIsDark = document.documentElement.classList.contains("dark-mode");
-          const icon = document.querySelector("#theme-toggle i");
-          if (icon) {
-            icon.className = bodyIsDark ? "fa-solid fa-sun" : "fa-solid fa-moon";
-          }
-        });
-      })();
-    </script>
     <script type="module" src="index.js"></script>
     <script type="module" src="js/profile-card.js"></script>
   </head>
@@ -81,9 +61,6 @@
               <button id="btn-en" class="lang-btn">EN</button>
               <span class="lang-divider">|</span>
               <button id="btn-jp" class="lang-btn">日本語</button>
-              <button id="theme-toggle" class="theme-btn no-print" style="margin-left: 10px; background: none; border: none; cursor: pointer; color: var(--text-primary); font-size: 18px;">
-                <i class="fa-solid fa-moon"></i>
-              </button>
             </div>
             <div class="author-img">
               <img id="profile-img" src="./images/profile.png" alt="Htein Lynn Aung" />

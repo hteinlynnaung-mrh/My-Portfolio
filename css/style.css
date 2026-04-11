@@ -14,21 +14,7 @@
   --hover-bg: rgba(255, 255, 255, 0.2);
 }
 
-.dark-mode {
-  --bg-primary: #121212;
-  --bg-secondary: #1a1a1a;
-  --text-primary: #e0e0e0;
-  --text-secondary: rgba(224, 224, 224, 0.7);
-  --text-muted: #aaaaaa;
-  --sidebar-bg: #1e1e1e;
-  --card-bg: #1e1e1e;
-  --card-bg-white: #1e1e1e;
-  --border-color: #333333;
-  --accent-color: #f9bf3f;
-  --timeline-line: #333333;
-  --accent-blue: #4da3ff;
-  --hover-bg: rgba(255, 255, 255, 0.05);
-}
+
 
 * {
   box-sizing: border-box;
@@ -1065,11 +1051,7 @@ strong {
   color: #000;
 }
 
-.dark-mode {
-  strong {
-    color: #f9bf3f;
-  }
-}
+
 
 .blog-card {
   display: flex;
