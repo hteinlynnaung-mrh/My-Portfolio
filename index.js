@@ -8,6 +8,7 @@ import {
 } from "./user-data/data.js";
 import { html, render } from "https://unpkg.com/lit-html?module";
 import { t, applyTranslations, setLanguage } from "./js/i18n.js";
+import { initTheme } from "./js/theme.js";
 
 import { URLs } from "./user-data/urls.js";
 
@@ -347,5 +348,7 @@ document
 document
   .getElementById("btn-jp")
   ?.addEventListener("click", () => setLanguage("jp"));
+
+initTheme();
 
 applyTranslations();
