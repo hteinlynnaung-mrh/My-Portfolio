@@ -65,10 +65,10 @@ const data ={
         "I am currently pursuing a Bachelor of Engineering in Software Engineering at North Chiang Mai University. I'm on a fast-track program with three semesters per year, aiming to complete my degree within three consecutive years."
       ],
       "tags": [
-        "Software Engineering",
         "Computer Science",
-        "Programming",
-        "Software Development"
+        "Software Engineering",
+        "Computer Architecture & Organization",
+        "Database Management"
       ],
       "icon": "graduation-cap"
     },
@@ -80,7 +80,7 @@ const data ={
         "I attended Government Technical College (Wakema) from 2014 to 2017, specializing in Electronic Communication. I successfully completed the course with a credit standing."
       ],
       "tags": [
-        "Electronic Communication",
+        "Telecommunication",
         "Programming & Networking",
         "Signal Processing",
         "Circuit Design"
