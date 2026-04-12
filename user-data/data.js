@@ -37,7 +37,7 @@ const allData = {
       },
       {
         title: "Special Skills Worker-1(Restaurant)",
-        duration: "January 2024 - May 2025",
+        duration: "January 2024 - April 2025",
         subtitle: "Ippinko Co.,Ltd. / Yokohama, Japan",
         details: [
           "Experienced Cook with over a year of expertise in Japanese and Chinese cuisine. Beyond culinary skills, I have a solid understanding of restaurant operational systems, ensuring efficient workflow and service quality."
@@ -131,7 +131,7 @@ const allData = {
       },
       {
         title: "特定技能1号（外食）",
-        duration: "2024年1月 - 2025年5月",
+        duration: "2024年1月 - 2025年4月",
         subtitle: "一品香株式会社 / 日本、横浜",
         details: [
           "日本料理と中国料理において1年以上の経験を持つ熟練した調理師。料理のスキルに加えて、レストランの運営システムをしっかりと理解しており、効率的なワークフローとサービスの質を確保しています。"
