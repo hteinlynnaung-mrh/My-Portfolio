@@ -62,7 +62,7 @@ const allData = {
         duration: "December 2016 - October 2019",
         subtitle: "Association of Government Technical Institute (AGTI), Myanmar",
         details: [
-          "I attended Government Technical College (Wakema) from 2014 to 2017, specializing in Electronic Communication. I successfully completed the course with a credit standing."
+          "I attended Government Technical College (Wakema) from 2016 to 2019, specializing in Electronic Communication. I successfully completed the course with a credit standing."
         ],
         tags: ["Telecommunication", "Programming & Networking", "Signal Processing", "Circuit Design"],
         icon: "graduation-cap"
@@ -156,7 +156,7 @@ const allData = {
         duration: "2016年12月 - 2019年10月",
         subtitle: "政府技術研究所（AGTI） / ミャンマー",
         details: [
-          "2014年から2017年まで政府技術学院（ワケマ）に通い、電子通信を専攻しました。コースを優秀な成績で修了しました。"
+          "2016年から2019年まで政府技術学院（ワケマ）に通い、電子通信を専攻しました。コースを優秀な成績で修了しました。"
         ],
         tags: ["電気通信", "プログラミングとネットワーキング", "信号処理", "回路設計"],
         icon: "graduation-cap"
