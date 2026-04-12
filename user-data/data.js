@@ -27,7 +27,7 @@ const allData = {
     experience: [
       {
         title: "Production Supervisor",
-        duration: "September 2020 - July 2023",
+        duration: "December 2019 - July 2023",
         subtitle: "Hana Seimitsu Co.,Ltd. / Yangon, Myanmar",
         details: [
           "Experienced Production Supervisor with over 3 years of expertise at Hana Seimitsu Co., Ltd. Specialize in manufacturing precision molds using advanced automation systems to optimize production efficiency and quality."
@@ -59,7 +59,7 @@ const allData = {
       },
       {
         title: "Diploma in Electronic Communication Engineering",
-        duration: "December 2017 - October 2020",
+        duration: "December 2016 - October 2019",
         subtitle: "Association of Government Technical Institute (AGTI), Myanmar",
         details: [
           "I attended Government Technical College (Wakema) from 2014 to 2017, specializing in Electronic Communication. I successfully completed the course with a credit standing."
@@ -97,7 +97,7 @@ const allData = {
   },
   jp: {
     bio: [
-      "こんにちは、ノースチェンマイ大学でソフトウェア工学を学んでいるフテイン・リン・アウンです。現在は、コンピュータサイエンスの基礎とソフトウェア開発ライフサイクル（SDLC）に深く没頭しています。優れたソフトウェアの構築は、強力なアーキテクチャの基盤と開発プロセスの明確な理解から始まると信じています。私の旅は開発に留まりません。クラウドエンジニアリングやDevOpsへの専門知識の拡大に非常に意欲的です。コードとインフラストラクチャのギャップを埋め、スケーラブルで効率的、かつ自動化されたシステムを構築することに情熱を注いでいます。"
+      "こんにちは、ノースチェンマイ大学でソフトウェア工学を学んでいる ティン リン アウンです。現在は、コンピュータサイエンスの基礎とソフトウェア開発ライフサイクル（SDLC）に深く没頭しています。優れたソフトウェアの構築は、強力なアーキテクチャの基盤と開発プロセスの明確な理解から始まると信じています。私の旅は開発に留まりません。クラウドエンジニアリングやDevOpsへの専門知識の拡大に非常に意欲的です。コードとインフラストラクチャのギャップを埋め、スケーラブルで効率的、かつ自動化されたシステムを構築することに情熱を注いでいます。"
     ],
     skills: [
       { name: "HTML5", icon: "devicon-html5-plain" },
@@ -121,7 +121,7 @@ const allData = {
     experience: [
       {
         title: "生産管理スーパーバイザー",
-        duration: "2020年9月 - 2023年7月",
+        duration: "2019年12月 - 2023年7月",
         subtitle: "華精密株式会社 / ミャンマー、ヤンゴン",
         details: [
           "華精密株式会社での3年以上の経験を持つ熟練した生産管理スーパーバイザー。高度な自動化システムを使用して精密金型を製造し、生産効率と品質を最適化することを専門としています。"
@@ -153,7 +153,7 @@ const allData = {
       },
       {
         title: "電子通信工学ディプロマ",
-        duration: "2017年12月 - 2020年10月",
+        duration: "2016年12月 - 2019年10月",
         subtitle: "政府技術研究所（AGTI） / ミャンマー",
         details: [
           "2014年から2017年まで政府技術学院（ワケマ）に通い、電子通信を専攻しました。コースを優秀な成績で修了しました。"
