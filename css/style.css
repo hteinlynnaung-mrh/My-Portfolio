@@ -667,6 +667,24 @@ body.offcanvas .colorlib-nav-toggle {
   color: #f9bf3f;
 }
 
+#skill-sphere-container {
+  cursor: grab;
+}
+
+#skill-sphere-container:active {
+  cursor: grabbing;
+}
+
+#skill-sphere-canvas canvas {
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  #skill-sphere-container {
+    height: 300px !important;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .submenu a {
     padding: 0px;
