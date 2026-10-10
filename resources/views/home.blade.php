@@ -36,8 +36,16 @@
     />
 
     <script src="{{ asset('js/modernizr-2.6.2.min.js') }}"></script>
+    <script>
+      (() => {
+        const stored = localStorage.getItem("portfolio-theme");
+        const theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
     <script type="module" src="{{ asset('index.js') }}"></script>
     <script type="module" src="{{ asset('js/profile-card.js') }}"></script>
+    <script type="module" src="{{ asset('js/theme.js') }}"></script>
   </head>
   <body>
     <div id="colorlib-page">
@@ -53,6 +61,10 @@
             aria-label="Toggle navigation menu"
             ><i></i
           ></a>
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode">
+            <i class="fa-solid fa-moon" aria-hidden="true"></i>
+            <span class="theme-toggle-label">Dark mode</span>
+          </button>
         </div>
         <aside
           id="colorlib-aside"
@@ -65,6 +77,10 @@
               <span class="lang-divider">|</span>
               <button id="btn-jp" class="lang-btn">日本語</button>
             </div>
+            <button class="theme-toggle no-print" type="button" data-theme-toggle aria-label="Switch to dark mode">
+              <i class="fa-solid fa-moon" aria-hidden="true"></i>
+              <span class="theme-toggle-label">Dark mode</span>
+            </button>
             <div class="author-img">
               <img id="profile-img" src="{{ asset('images/profile.png') }}" alt="Htein Lynn Aung" />
             </div>
@@ -114,10 +130,20 @@
                   <h1 data-i18n="section_skills">Skills</h1>
                 </div>
               </div>
-              <div id="skill-sphere-container" class="animate-box" data-animate-effect="fadeInUp" style="margin-top: 30px; height: 400px; width: 100%; position: relative; overflow: hidden;">
-                <div id="skill-sphere-canvas" style="width: 100%; height: 100%;"></div>
+              <div id="skills" class="skills-list" aria-label="Technology skills"></div>
+              <div
+                id="technology-skills-globe"
+                class="technology-skills-globe"
+                aria-label="Interactive 3D technology skills globe"
+              >
+                <div id="technology-skills-canvas"></div>
+                <div
+                  id="technology-skills-tooltip"
+                  class="technology-skills-tooltip"
+                  role="tooltip"
+                  aria-hidden="true"
+                ></div>
               </div>
-              <div id="skills" class="row"></div>
             </div>
           </section>
           <section class="colorlib-profile" data-section="profile-card">
@@ -240,7 +266,7 @@
             </div>
           </section>
           <section class="colorlib-contact" data-section="contact">
-            <div class="colorlib-narrow-content">
+            <div class="colorlib-narrow-content aligned-content-shell">
               <div
                 class="row row-bottom-padded-sm animate-box"
                 data-animate-effect="fadeInLeft"
@@ -254,13 +280,13 @@
                   discussions, business opportunities, or just to say hello—I’d
                   love to hear from you!
                 </p>
-                <div id="contact-links"></div>
               </div>
+              <div id="contact-links"></div>
             </div>
           </section>
           
           <section class="colorlib-footer no-print" data-section="footer">
-            <div class="colorlib-narrow-content">
+            <div class="colorlib-narrow-content aligned-content-shell">
               <footer class="footer" id="footer"></footer>
             </div>
           </section>
@@ -271,7 +297,7 @@
     <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script type="module" src="{{ asset('js/skill-sphere.js') }}"></script>
+    <script type="module" src="{{ asset('js/technology-skills-globe.js') }}"></script>
 
   </body>
 </html>

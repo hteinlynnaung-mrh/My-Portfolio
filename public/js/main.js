@@ -126,6 +126,16 @@
   var navigationSection = function () {
     var $section = $("section[data-section]");
 
+    var activateContactAtPageBottom = function () {
+      var scrollTop = $(window).scrollTop();
+      var viewportBottom = scrollTop + $(window).height();
+      var documentBottom = $(document).height();
+
+      if (viewportBottom >= documentBottom - 2) {
+        navActive("contact");
+      }
+    };
+
     $section.waypoint(
       function (direction) {
         if (direction === "down") {
@@ -149,6 +159,12 @@
         },
       }
     );
+
+    $(window).on("scroll.navigationBottom resize.navigationBottom", function () {
+      window.requestAnimationFrame(activateContactAtPageBottom);
+    });
+
+    activateContactAtPageBottom();
   };
 
   $(function () {

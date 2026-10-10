@@ -11,7 +11,11 @@ const allData = {
       { name: "Bootstrap", icon: "devicon-bootstrap-plain", color: "#563D7C" },
       { name: "Tailwind CSS", icon: "devicon-tailwindcss-original", color: "#06B6D4" },
       { name: "React", icon: "devicon-react-original", color: "#61DAFB" },
+      { name: "React Native", icon: "devicon-react-original", color: "#61DAFB" },
+      { name: "Next.js", icon: "devicon-nextjs-plain", color: "#111111" },
+      { name: "Express.js", icon: "devicon-express-original", color: "#555555" },
       { name: "JavaScript", icon: "devicon-javascript-plain", color: "#F7DF1E" },
+      { name: "Python", icon: "devicon-python-plain", color: "#3776AB" },
       { name: "Java", icon: "devicon-java-plain", color: "#596706" },
       { name: "Spring Boot", icon: "devicon-spring-plain", color: "#6DB33F" },
       { name: "PHP", icon: "devicon-php-plain", color: "#777BB4" },
@@ -71,8 +75,7 @@ const allData = {
     contactLinks: [
       { label: "Email", link: "mailto:hteinlynnaung.1111@gmail.com", icon: "fa fa-envelope" },
       { label: "LinkedIn", link: "https://www.linkedin.com/in/htein-software-engineer/", icon: "fa-brands fa-linkedin" },
-      { label: "GitHub", link: "https://github.com/hteinlynnaung-mrh", icon: "fa-brands fa-github" },
-      { label: "Htein's Bakery", link: "https://htein-bakery.vercel.app/", icon: "fa fa-coffee" }
+      { label: "GitHub", link: "https://github.com/hteinlynnaung-mrh", icon: "fa-brands fa-github" }
     ],
     footer: [
       {
@@ -106,7 +109,11 @@ const allData = {
       { name: "Bootstrap", icon: "devicon-bootstrap-plain", color: "#563D7C" },
       { name: "Tailwind CSS", icon: "devicon-tailwindcss-original", color: "#06B6D4" },
       { name: "React", icon: "devicon-react-original", color: "#61DAFB" },
+      { name: "React Native", icon: "devicon-react-original", color: "#61DAFB" },
+      { name: "Next.js", icon: "devicon-nextjs-plain", color: "#111111" },
+      { name: "Express.js", icon: "devicon-express-original", color: "#555555" },
       { name: "JavaScript", icon: "devicon-javascript-plain", color: "#F7DF1E" },
+      { name: "Python", icon: "devicon-python-plain", color: "#3776AB" },
       { name: "Java", icon: "devicon-java-plain", color: "#596706" },
       { name: "Spring Boot", icon: "devicon-spring-plain", color: "#6DB33F" },
       { name: "PHP", icon: "devicon-php-plain", color: "#777BB4" },
@@ -166,8 +173,7 @@ const allData = {
     contactLinks: [
       { label: "メール", link: "mailto:hteinlynnaung.1111@gmail.com", icon: "fa fa-envelope" },
       { label: "LinkedIn", link: "https://www.linkedin.com/in/htein-software-engineer/", icon: "fa-brands fa-linkedin" },
-      { label: "GitHub", link: "https://github.com/hteinlynnaung-mrh", icon: "fa-brands fa-github" },
-      { label: "Htein's Bakery", link: "https://htein-bakery.vercel.app/", icon: "fa fa-coffee" }
+      { label: "GitHub", link: "https://github.com/hteinlynnaung-mrh", icon: "fa-brands fa-github" }
     ],
     footer: [
       {

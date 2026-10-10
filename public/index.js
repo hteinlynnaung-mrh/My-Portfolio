@@ -82,16 +82,74 @@ function populateBio(items, id) {
 function populateSkills(items, id) {
   const skillsTag = document.getElementById(id);
 
-  const skillsTemplate = html` ${items.map(
-    (item) => html` <div class="col-md-3 animate-box">
-      <div class="progress-wrap">
-        <li class="skill-item">
-          <i class="${item.icon} skill-icon"></i>
-          ${item.name}
-        </li>
-      </div>
-    </div>`
-  )}`;
+  if (!skillsTag) return;
+
+  const categories = [
+    {
+      title: "skill_group_programming",
+      names: ["HTML5", "CSS", "JavaScript", "Java", "PHP", "Golang", "Python"],
+    },
+    {
+      title: "skill_group_frameworks",
+      names: [
+        "Bootstrap",
+        "Tailwind CSS",
+        "React",
+        "React Native",
+        "Next.js",
+        "Express.js",
+        "Spring Boot",
+        "Laravel",
+      ],
+    },
+    {
+      title: "skill_group_databases",
+      names: ["MySQL", "PostgreSQL", "MongoDB"],
+    },
+    {
+      title: "skill_group_tools",
+      names: ["Git&GitHub", "Docker"],
+    },
+    { title: "skill_group_language", names: ["JLPT-N2"] },
+  ];
+
+  const groupedSkills = categories
+    .map((category) => ({
+      ...category,
+      skills: category.names
+        .map((name) => items.find((item) => item.name === name))
+        .filter(Boolean),
+    }))
+    .filter((category) => category.skills.length);
+
+  const skillsTemplate = html`
+    <div class="skills-groups">
+      ${groupedSkills.map(
+        (group) => html`
+          <div class="skill-group">
+            <h3 class="skill-group-title">${t(group.title)}</h3>
+            <div class="skill-chips">
+              ${group.skills.map(
+                (item) => html`
+                  <span
+                    class="skill-chip"
+                    style="--skill-color: ${item.color}; --skill-foreground: ${
+                      ["#F7DF1E", "#FFD700"].includes(item.color)
+                        ? "#1d1d1d"
+                        : "#fff"
+                    }"
+                  >
+                    <i class="${item.icon} colored skill-icon" aria-hidden="true"></i>
+                    <span>${item.name}</span>
+                  </span>
+                `
+              )}
+            </div>
+          </div>
+        `
+      )}
+    </div>
+  `;
   render(skillsTemplate, skillsTag);
 }
 

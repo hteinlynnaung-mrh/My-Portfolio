@@ -462,6 +462,12 @@ body.offcanvas #colorlib-main {
   display: block;
 }
 
+/* Gives the final section enough breathing room for ScrollSpy at page end. */
+.colorlib-contact {
+  padding-bottom: 1em;
+  scroll-margin-top: var(--mobile-nav-height);
+}
+
 .profile-cards {
   display: flex;
 }
@@ -690,40 +696,182 @@ body.offcanvas #colorlib-main {
   padding-bottom: 2px;
 }
 
-.skill-item {
+.skills-groups {
   display: flex;
+  flex-direction: column;
+  gap: 2.2em;
+  margin-top: 1.5em;
+}
+
+.skill-group {
+  width: 100%;
+}
+
+.skill-group-title {
+  margin: 0 0 0.8em;
+  padding-bottom: 0.45em;
+  border-bottom: 1px solid var(--border-color);
+  font-family: "Montserrat", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.skill-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-chip {
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 14px;
+  background: var(--skill-color);
+  color: var(--skill-foreground);
+  border: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.skill-chip:hover {
+  color: var(--skill-foreground);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
 }
 
 .skill-icon {
-  font-size: 24px;
-  color: var(--text-primary);
-  transition: transform 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 21px;
+  color: var(--skill-foreground) !important;
+  font-size: 20px;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
 }
 
-.skill-item:hover .skill-icon {
-  transform: scale(1.2);
-  color: #f9bf3f;
+.skill-chip .skill-icon::before {
+  color: var(--skill-foreground) !important;
 }
 
-#skill-sphere-container {
+.technology-skills-globe {
+  position: relative;
+  width: 100%;
+  height: 560px;
+  margin: 1.5em 0 0.5em;
+  overflow: hidden;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(32, 78, 159, 0.3), transparent 38%),
+    linear-gradient(135deg, #050914, #0a1224 58%, #0d0920);
+  box-shadow: inset 0 0 80px rgba(38, 107, 255, 0.08);
   cursor: grab;
+  touch-action: pan-y;
 }
 
-#skill-sphere-container:active {
+.technology-skills-globe:active {
   cursor: grabbing;
 }
 
-#skill-sphere-canvas canvas {
+#technology-skills-canvas,
+#technology-skills-canvas canvas {
   display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.technology-skills-tooltip {
+  position: absolute;
+  z-index: 2;
+  transform: translate(-50%, -125%);
+  padding: 7px 11px;
+  border: 1px solid rgba(115, 190, 255, 0.7);
+  border-radius: 7px;
+  background: rgba(4, 14, 35, 0.94);
+  box-shadow: 0 0 18px rgba(54, 162, 255, 0.35);
+  color: #f2f8ff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  white-space: nowrap;
+}
+
+.technology-skills-tooltip.is-visible {
+  transform: translate(-50%, -145%);
+  opacity: 1;
+}
+
+.technology-skills-fallback {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  gap: 10px;
+  height: 100%;
+  padding: 30px;
+}
+
+.technology-skills-fallback span {
+  padding: 8px 12px;
+  border: 1px solid var(--technology-color);
+  border-radius: 7px;
+  background: rgba(7, 18, 43, 0.88);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--technology-color) 45%, transparent);
+  color: #eef6ff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 992px) {
+  .technology-skills-globe {
+    height: 500px;
+  }
 }
 
 @media screen and (max-width: 768px) {
-  #skill-sphere-container {
-    height: 300px !important;
+  .skills-groups {
+    gap: 1.6em;
+  }
+
+  .skill-group-title {
+    font-size: 18px;
+  }
+
+  .skill-chip {
+    min-height: 34px;
+    padding: 0 11px;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  .skill-icon {
+    min-width: 19px;
+    font-size: 18px;
+  }
+
+  .technology-skills-globe {
+    height: 430px;
+    border-radius: 14px;
+  }
+
+  .technology-skills-tooltip {
+    font-size: 11px;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .technology-skills-globe {
+    cursor: default;
   }
 }
 
@@ -1338,11 +1486,59 @@ strong {
 }
 
 .contact-links-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
-  justify-content: space-between;
-  padding-left: 12px;
+  width: 100%;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.contact-links-list .profile-card {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.aligned-content-shell {
+  width: 100%;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.aligned-content-shell #contact-links,
+.aligned-content-shell .contact-links-list,
+.aligned-content-shell > footer {
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.aligned-content-shell > footer {
+  margin-bottom: 0;
+}
+
+.aligned-content-shell > #contact-links {
+  margin-top: 1em;
+}
+
+.colorlib-contact .row-bottom-padded-sm {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.colorlib-contact .colorlib-narrow-content {
+  padding-bottom: 1em;
+}
+
+@media screen and (max-width: 768px) {
+  .contact-links-list {
+    grid-template-columns: 1fr;
+  }
 }
 
 .contact-link {
@@ -1439,7 +1635,7 @@ strong {
 	transition: all 0.3s ease;
   }
   
-  .home-link:hover {
+.home-link:hover {
 	background: #f9bf3f;
 	color: #000;
 	transform: translateX(-5px);
@@ -1451,3 +1647,320 @@ strong {
 	  font-size: 14px;
 	}
   }
+
+/* Theme system */
+html[data-theme="dark"] {
+  --bg-primary: #000000;
+  --bg-secondary: #080808;
+  --text-primary: #edf5ff;
+  --text-secondary: rgba(237, 245, 255, 0.78);
+  --text-muted: #a8b7ca;
+  --sidebar-bg: #000000;
+  --card-bg: #000000;
+  --card-bg-white: #000000;
+  --border-color: #292929;
+  --accent-color: #ffd166;
+  --timeline-line: #58b8ff;
+  --accent-blue: #67c8ff;
+  --hover-bg: rgba(104, 200, 255, 0.16);
+  --footer-bg: var(--sidebar-bg);
+  --color: #edf5ff;
+  --color-smooth: #d8e8fa;
+  --input-border: #4f6d92;
+}
+
+html,
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.38);
+  color: var(--text-primary);
+  font: 600 11px/1 "Montserrat", sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  background: var(--hover-bg);
+  border-color: var(--accent-blue);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+#colorlib-aside .theme-toggle {
+  margin: 0 auto 14px;
+}
+
+.mobile-nav-bar .theme-toggle {
+  margin: 0 12px 11px auto;
+  min-height: 34px;
+}
+
+html[data-theme="dark"] .theme-toggle {
+  border-color: rgba(190, 222, 255, 0.36);
+  background: rgba(8, 20, 42, 0.56);
+}
+
+html[data-theme="dark"] #colorlib-aside {
+  background: var(--sidebar-bg);
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] #colorlib-aside,
+html[data-theme="dark"] body.offcanvas #colorlib-aside {
+  background-color: #050505;
+}
+
+html[data-theme="dark"] #colorlib-aside #colorlib-main-menu ul li a:hover,
+html[data-theme="dark"] #colorlib-aside #colorlib-main-menu ul li a:focus {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .lang-btn {
+  color: rgba(237, 245, 255, 0.78);
+}
+
+html[data-theme="dark"] .lang-divider {
+  color: rgba(237, 245, 255, 0.4);
+}
+
+html[data-theme="dark"] .mobile-nav-bar {
+  background: rgba(0, 0, 0, 0.97);
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme="dark"] .colorlib-nav-toggle.active i::before,
+html[data-theme="dark"] .colorlib-nav-toggle.active i::after {
+  background: #ffffff;
+}
+
+html[data-theme="dark"] .repo-language,
+html[data-theme="dark"] .repo-stars,
+html[data-theme="dark"] .repo-forks,
+html[data-theme="dark"] .profile-username,
+html[data-theme="dark"] .stat-label,
+html[data-theme="dark"] .trek-meta,
+html[data-theme="dark"] .repo-description,
+html[data-theme="dark"] .publish-date,
+html[data-theme="dark"] .visitor-label {
+  color: var(--text-muted);
+}
+
+html[data-theme="dark"] .profile-card,
+html[data-theme="dark"] .blog-link,
+html[data-theme="dark"] .repo-link,
+html[data-theme="dark"] .contact-link,
+html[data-theme="dark"] strong,
+html[data-theme="dark"] .profile-url,
+html[data-theme="dark"] .blog-heading,
+html[data-theme="dark"] .blog-description,
+html[data-theme="dark"] .trek-name,
+html[data-theme="dark"] .trek-details,
+html[data-theme="dark"] .stat-value {
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] .timeline-label,
+html[data-theme="dark"] .trek-card {
+  background: var(--card-bg-white);
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] .btn-view-profile {
+  background-color: #050505;
+  border-color: #67c8ff;
+  color: #eef7ff;
+}
+
+html[data-theme="dark"] .btn-view-profile:hover {
+  background: #67c8ff;
+  border-color: #67c8ff;
+  color: #050505;
+}
+
+html[data-theme="dark"] .accordion,
+html[data-theme="dark"] .accordion .link {
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+html[data-theme="dark"] .accordion li i,
+html[data-theme="dark"] .copyright-text {
+  color: var(--text-muted);
+}
+
+html[data-theme="dark"] .submenu a {
+  color: var(--text-secondary);
+}
+
+html[data-theme="dark"] .home-link {
+  background: rgba(0, 0, 0, 0.9);
+  color: #eef7ff;
+  border: 1px solid rgba(125, 190, 255, 0.35);
+}
+
+html[data-theme="dark"] .home-link:hover {
+  background: var(--accent-color);
+  color: #142238;
+}
+
+html[data-theme="dark"] .technology-skills-globe {
+  background: #000000;
+  box-shadow: inset 0 0 80px rgba(38, 107, 255, 0.06);
+}
+
+html[data-theme="dark"] #colorlib-page,
+html[data-theme="dark"] .container-wrap,
+html[data-theme="dark"] #colorlib-main,
+html[data-theme="dark"] section,
+html[data-theme="dark"] footer {
+  background-color: #000000;
+}
+
+html[data-theme="dark"] .technology-skills-tooltip {
+  background: rgba(0, 0, 0, 0.96);
+  border-color: rgba(115, 190, 255, 0.72);
+}
+
+html[data-theme="light"] .technology-skills-globe {
+  background: #ffffff;
+  box-shadow: inset 0 0 70px rgba(120, 145, 175, 0.1);
+}
+
+html[data-theme="dark"] .repo-card,
+html[data-theme="dark"] .blog-card,
+html[data-theme="dark"] .timeline-label,
+html[data-theme="dark"] .profile-card,
+html[data-theme="dark"] .trek-card,
+html[data-theme="dark"] .accordion,
+html[data-theme="dark"] footer {
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] .repo-link,
+html[data-theme="dark"] .repo-heading,
+html[data-theme="dark"] .blog-link,
+html[data-theme="dark"] .blog-heading,
+html[data-theme="dark"] .timeline-text,
+html[data-theme="dark"] .timeline-sublabel,
+html[data-theme="dark"] .contact-link,
+html[data-theme="dark"] .contact-label,
+html[data-theme="dark"] .col-list a,
+html[data-theme="dark"] .col-title,
+html[data-theme="dark"] .trek-name,
+html[data-theme="dark"] .trek-details,
+html[data-theme="dark"] strong {
+  color: #f3f8ff;
+}
+
+html[data-theme="dark"] .repo-description,
+html[data-theme="dark"] .blog-description,
+html[data-theme="dark"] .profile-url,
+html[data-theme="dark"] .timeline-sublabel,
+html[data-theme="dark"] .publish-date,
+html[data-theme="dark"] .repo-language,
+html[data-theme="dark"] .repo-stars,
+html[data-theme="dark"] .repo-forks,
+html[data-theme="dark"] .stats-row,
+html[data-theme="dark"] .stat-label,
+html[data-theme="dark"] .copyright-text {
+  color: #b8c8dc;
+}
+
+html[data-theme="dark"] .language-dot {
+  background-color: #9bb9d8;
+}
+
+html[data-theme="dark"] .repo-link:hover,
+html[data-theme="dark"] .blog-link:hover,
+html[data-theme="dark"] .col-list a:hover,
+html[data-theme="dark"] .col-list a:focus {
+  color: #7dd3ff;
+}
+
+/* High-contrast dark-mode text baseline for legacy components. */
+html[data-theme="dark"] #colorlib-main h1,
+html[data-theme="dark"] #colorlib-main h2,
+html[data-theme="dark"] #colorlib-main h3,
+html[data-theme="dark"] #colorlib-main h4,
+html[data-theme="dark"] #colorlib-main h5,
+html[data-theme="dark"] #colorlib-main h6,
+html[data-theme="dark"] #colorlib-main p,
+html[data-theme="dark"] #colorlib-main li,
+html[data-theme="dark"] #colorlib-main label {
+  color: #f3f8ff;
+}
+
+html[data-theme="dark"] #colorlib-main a:not(.skill-chip),
+html[data-theme="dark"] #colorlib-main .timeline-sublabel,
+html[data-theme="dark"] #colorlib-main .contact-label,
+html[data-theme="dark"] #colorlib-main .repo-heading {
+  color: #f3f8ff;
+}
+
+html[data-theme="dark"] #colorlib-main .publish-date,
+html[data-theme="dark"] #colorlib-main .repo-description,
+html[data-theme="dark"] #colorlib-main .blog-description,
+html[data-theme="dark"] #colorlib-main .repo-language,
+html[data-theme="dark"] #colorlib-main .repo-stars,
+html[data-theme="dark"] #colorlib-main .repo-forks,
+html[data-theme="dark"] #colorlib-main .stats-row,
+html[data-theme="dark"] #colorlib-main .profile-url {
+  color: #b8c8dc;
+}
+
+html[data-theme="dark"] #colorlib-aside,
+html[data-theme="dark"] #colorlib-aside p,
+html[data-theme="dark"] #colorlib-aside span,
+html[data-theme="dark"] #colorlib-aside label {
+  color: #f3f8ff;
+}
+
+html[data-theme="dark"] .colorlib-contact .colorlib-narrow-content {
+  padding-bottom: 1em;
+}
+
+html[data-theme="dark"] #colorlib-main > section > .colorlib-narrow-content {
+  margin-bottom: 1.25em;
+  padding-top: 1.35em;
+  padding-bottom: 1.35em;
+  border: 1px solid rgba(142, 190, 235, 0.3);
+  border-radius: 14px;
+  background: #000000;
+  box-shadow: 0 0 0 1px rgba(86, 142, 207, 0.06), 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+html[data-theme="dark"] .timeline-label,
+html[data-theme="dark"] .repo-card,
+html[data-theme="dark"] .blog-card,
+html[data-theme="dark"] .profile-card,
+html[data-theme="dark"] .trek-card {
+  border: 1px solid rgba(142, 190, 235, 0.28);
+}
+
+@media screen and (max-width: 878px) {
+  html[data-theme="dark"] #colorlib-main > section > .colorlib-narrow-content {
+    padding: 1.1em 1em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body,
+  .theme-toggle {
+    transition: none;
+  }
+}
