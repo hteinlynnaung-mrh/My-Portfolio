@@ -84,7 +84,7 @@
             <div class="author-img">
               <img id="profile-img" src="{{ asset('images/profile.png') }}" alt="Htein Lynn Aung" />
             </div>
-            <h1 id="colorlib-logo"><a href="{{ route('home') }}">Htein Lynn Aung</a></h1>
+            <h1 id="colorlib-logo"><a href="{{ route('home') }}"><span data-i18n="profile_name">Htein Lynn Aung</span></a></h1>
           </div>
           <nav
             id="colorlib-main-menu"

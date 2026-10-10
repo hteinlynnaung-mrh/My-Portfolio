@@ -1,5 +1,6 @@
 const translations = {
   en: {
+    profile_name: "Htein Lynn Aung",
     menu_about: "About",
     menu_skills: "Skills",
     menu_experience: "Work Experience",
@@ -47,9 +48,14 @@ const translations = {
     time_year_ago: "1 year ago",
     time_years_ago: "years ago",
     lang_en: "English",
-    lang_jp: "Japanese"
+    lang_jp: "Japanese",
+    theme_dark_mode: "Dark mode",
+    theme_light_mode: "Light mode",
+    theme_switch_to_dark: "Switch to dark mode",
+    theme_switch_to_light: "Switch to light mode"
   },
   jp: {
+    profile_name: "ティン リン アウン",
     menu_about: "私について",
     menu_skills: "スキル",
     menu_experience: "職務経歴",
@@ -97,7 +103,11 @@ const translations = {
     time_year_ago: "1 年前",
     time_years_ago: "年前",
     lang_en: "English",
-    lang_jp: "日本語"
+    lang_jp: "日本語",
+    theme_dark_mode: "ダークモード",
+    theme_light_mode: "ライトモード",
+    theme_switch_to_dark: "ダークモードに切り替え",
+    theme_switch_to_light: "ライトモードに切り替え"
   }
 };
 

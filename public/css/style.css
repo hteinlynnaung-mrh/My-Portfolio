@@ -469,6 +469,12 @@ body.offcanvas #colorlib-main {
   scroll-margin-top: var(--mobile-nav-height);
 }
 
+/* Keep the skills section more compact without changing other sections. */
+#section-skills {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .colorlib-experience[data-section="blogs"] {
   margin-bottom: 0.5em;
 }
@@ -729,7 +735,7 @@ html[data-theme="dark"] .about-card {
 .skills-groups {
   display: flex;
   flex-direction: column;
-  gap: 2.2em;
+  gap: 1em;
   margin-top: 1.5em;
 }
 

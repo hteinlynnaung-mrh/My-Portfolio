@@ -1,3 +1,5 @@
+import { t } from "./i18n.js";
+
 const THEME_STORAGE_KEY = "portfolio-theme";
 const themeQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -6,10 +8,10 @@ function updateThemeControls(theme) {
   document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
     const icon = button.querySelector("i");
     const label = button.querySelector(".theme-toggle-label");
-    button.setAttribute("aria-label", darkMode ? "Switch to light mode" : "Switch to dark mode");
+    button.setAttribute("aria-label", darkMode ? t("theme_switch_to_light") : t("theme_switch_to_dark"));
     button.setAttribute("aria-pressed", String(darkMode));
     if (icon) icon.className = darkMode ? "fa-solid fa-sun" : "fa-solid fa-moon";
-    if (label) label.textContent = darkMode ? "Light mode" : "Dark mode";
+    if (label) label.textContent = darkMode ? t("theme_light_mode") : t("theme_dark_mode");
   });
 }
 
