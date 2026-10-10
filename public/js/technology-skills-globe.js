@@ -644,7 +644,23 @@ class TechnologySkillsGlobe {
   }
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+function initializeTechnologySkillsGlobe(attempt = 0) {
+  if (!window.THREE) {
+    if (attempt < 50) {
+      window.setTimeout(() => initializeTechnologySkillsGlobe(attempt + 1), 100);
+    }
+    return;
+  }
+
   const globe = new TechnologySkillsGlobe();
-  if (globe.container) globe.start().catch(() => globe.showFallback());
-});
+  if (globe.container) {
+    window.__technologySkillsGlobe = globe;
+    globe.start().catch(() => globe.showFallback());
+  }
+}
+
+if (document.readyState === "loading") {
+  window.addEventListener("DOMContentLoaded", () => initializeTechnologySkillsGlobe(), { once: true });
+} else {
+  initializeTechnologySkillsGlobe();
+}

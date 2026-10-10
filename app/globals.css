@@ -1,0 +1,38 @@
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body { margin: 0; }
+
+a { text-decoration: none; }
+
+.page-link { color: inherit; }
+
+.generator-page {
+  min-height: 100vh;
+  padding: 40px 0;
+  background: #f9f9f9;
+  color: #333;
+  font-family: "Open Sans", sans-serif;
+}
+
+.admin-page { min-height: 100vh; }
+
+.admin-page .admin-main { min-height: calc(100vh - 70px); }
+
+html.scroll-reveal-ready .animate-box {
+  opacity: 0;
+}
+
+html.scroll-reveal-ready .animate-box.scroll-revealed {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.scroll-reveal-ready .animate-box,
+  html.scroll-reveal-ready .animate-box.scroll-revealed {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}

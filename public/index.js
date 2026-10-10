@@ -16,33 +16,42 @@ const { medium, gitConnected, gitRepo } = URLs;
 async function fetchBlogsFromMedium(url) {
   try {
     const response = await fetch(url);
-    const { items, feed } = await response.json();
-    // document.getElementById("profile-img").src = feed.image;
+    if (!response.ok) {
+      populateBlogs([], "blogs");
+      return;
+    }
+
+    const payload = await response.json();
+    const items = Array.isArray(payload?.items) ? payload.items : [];
     populateBlogs(items, "blogs");
   } catch (error) {
-    throw new Error(
-      `Error in fetching the blogs from Medium profile: ${error}`
-    );
+    console.warn("Medium blog data is unavailable.", error);
+    populateBlogs([], "blogs");
   }
 }
 
 async function fetchReposFromGit(url) {
   try {
     const response = await fetch(url);
-    const items = await response.json();
+    if (!response.ok) return;
+
+    const payload = await response.json();
+    const items = Array.isArray(payload) ? payload : [];
     populateRepo(items, "repos");
   } catch (error) {
-    throw new Error(`Error in fetching the blogs from repos: ${error}`);
+    console.warn("GitHub repository data is unavailable.", error);
   }
 }
 
 async function fetchGitConnectedData(url) {
   try {
     const response = await fetch(url);
-    const { basics } = await response.json();
-    mapBasicResponse(basics);
+    if (!response.ok) return;
+
+    const payload = await response.json();
+    if (payload?.basics) mapBasicResponse(payload.basics);
   } catch (error) {
-    throw new Error(`Error in fetching the blogs from git connected: ${error}`);
+    console.warn("GitConnected profile data is unavailable.", error);
   }
 }
 
@@ -155,6 +164,17 @@ function populateSkills(items, id) {
 
 function populateBlogs(items, id) {
   const projectdesign = document.getElementById(id);
+  if (!projectdesign) return;
+
+  const accordion = projectdesign.closest(".accordion");
+  const safeItems = Array.isArray(items) ? items : [];
+  accordion?.classList.toggle("blogs-empty", safeItems.length === 0);
+
+  if (safeItems.length === 0) {
+    projectdesign.replaceChildren();
+    return;
+  }
+
   const createCategoryBadges = (categories) => html`
     <div class="categories-div">
       ${categories.map(
@@ -164,7 +184,7 @@ function populateBlogs(items, id) {
   `;
 
   const blogTemplate = html`
-    ${items.slice(0, 3).map(
+    ${safeItems.slice(0, 3).map(
       (item) => html`
         <div class="blog-card">
           <div class="blog-content">

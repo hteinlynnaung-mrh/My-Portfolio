@@ -170,10 +170,8 @@
   $(function () {
     fullHeight();
     counterWayPoint();
-    contentWayPoint();
     burgerMenu();
     clickMenu();
-    navigationSection();
     mobileMenuOutsideClick();
   });
 })();

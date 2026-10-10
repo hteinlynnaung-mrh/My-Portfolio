@@ -97,7 +97,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   });
 
   document.querySelectorAll(".github-card").forEach(async (el) => {
-    const username = el.getAttribute("username");
+    const username = el.getAttribute("data-username") || el.getAttribute("username");
     const data = await get(`https://api.github.com/users/${username}`);
     render(githubCardTemplate(data), el);
   });
