@@ -1,201 +1,209 @@
-# Htein Lyn Naung — Laravel Portfolio
+# Htein Lynn Aung Portfolio
 
-A single-page developer portfolio built on Laravel and Blade. The application presents the portfolio owner’s profile, skills, experience, education, repositories, articles, contact links, theme controls, and an interactive Three.js technology-skills globe.
+A responsive developer portfolio implemented with a Next.js App Router frontend and a parallel Laravel/Blade implementation. The site presents profile information, bilingual portfolio content, skills, experience, education, repositories, articles, contact links, theme controls, and an interactive Three.js technology globe.
 
-## Key features
+## Current architecture
 
-- Responsive portfolio page with mobile navigation and ScrollSpy behavior.
-- English/Japanese content switching backed by `public/user-data/data.js`.
-- Dark and light themes with persisted user preference and system-theme fallback.
-- Colorful skill blocks plus a responsive, animated Three.js skills globe.
-- GitHub profile/repository cards and external portfolio content loaded by browser-side JavaScript.
-- Medium/RSS, GitConnected, and pinned-repository integrations with graceful loading states.
-- Laravel Blade views for the portfolio, admin placeholder, and JSON generator pages.
-- PHPUnit-based Laravel feature tests and a Vite build pipeline.
+This repository contains two web runtimes that share the same public assets and browser-side portfolio modules:
 
-## Tech stack
+- **Next.js is the current npm/Vercel application.** The App Router pages live in `app/`, `npm run build` runs `next build`, and `vercel.json` declares the Next.js framework.
+- **Laravel remains a complete server-rendered application.** Laravel routes in `routes/web.php` return Blade views through `PortfolioController`. It can be run with `php artisan serve` and uses the same `public/` CSS, JavaScript, images, and user data.
+- **The two implementations are not rendered together.** Use the Next.js server or the Laravel server as the selected runtime; both expose the same primary URLs.
+
+Portfolio content is intentionally frontend-oriented: the main data is stored in `public/user-data/data.js`, not in custom portfolio database tables. Laravel’s database, user model, migrations, and default infrastructure remain available for future backend-managed features.
+
+## Features
+
+- Responsive portfolio layout with desktop sidebar, mobile navigation, ScrollSpy, and scroll-reveal animations.
+- English/Japanese language switching persisted in `localStorage` under `lang`.
+- Localized section headings, profile name, theme controls, skill-group labels, and portfolio data.
+- Light/dark theme switching persisted under `portfolio-theme`, with system-theme fallback and reduced-motion support.
+- Categorized skill chips with responsive wrapping and a responsive animated Three.js technology globe.
+- Smaller globe sphere and hexagonal technology icons tuned for the skills section.
+- Browser-side GitHub, pinned-repository, GitConnected, and Medium/RSS2JSON integrations with graceful failure handling.
+- Next.js placeholder admin dashboard and JSON generator pages.
+- Equivalent Laravel Blade pages for the portfolio, admin placeholder, and JSON generator.
+- Laravel feature coverage for the three Laravel routes.
+
+## Technology stack
 
 | Area | Technology |
 | --- | --- |
-| Runtime | PHP 8.3 or newer (`composer.json` requires `^8.3`) |
-| Backend | Laravel 13.x (installed environment: 13.35.0; Composer constraint: `^13.17`) |
-| Templating | Blade |
-| Database | SQLite by default; configurable for other Laravel-supported drivers |
-| Cache | Database cache store by default |
-| Session | Database session driver by default |
-| Queue | Database queue connection by default |
-| Frontend | Vanilla JavaScript modules, Blade, CSS, jQuery/Waypoints, Three.js, Lit/Lit HTML CDN modules, Bootstrap and Devicon assets |
-| Build tooling | Vite 8, Laravel Vite plugin, Tailwind CSS 4 packages in the Vite toolchain |
-| Testing | PHPUnit 12 through `php artisan test` |
+| Primary frontend runtime | Next.js 16, React 19, TypeScript |
+| Alternate/server-rendered runtime | Laravel 13, PHP 8.3+, Blade |
+| Frontend styling | `public/css/style.css`, `public/css/animate.css`, `app/globals.css` |
+| Browser modules | Vanilla JavaScript ES modules, Lit HTML from CDN, Three.js from CDN |
+| UI assets | Font Awesome, Devicon, Google Fonts, jQuery and Waypoints where used by the legacy Blade flow |
+| Data | `public/user-data/data.js` and `public/user-data/urls.js` |
+| Database | SQLite by default for Laravel; no portfolio-specific tables |
+| Testing | PHPUnit 12 through Laravel’s test runner |
+| Deployment configuration | Vercel Next.js configuration in `vercel.json` |
 
-The current portfolio UI is primarily served from `public/` and uses CDN-loaded browser modules. The Laravel Vite scaffold is retained for buildable frontend entry points; `resources/js/app.js` is currently minimal and the home page does not depend on the generated Vite bundle for its main portfolio rendering.
+`resources/js/app.js` and `vite.config.js` are retained Laravel/Vite scaffold files. They are not the source of the current Next.js portfolio build, and the portfolio page does not depend on a generated Vite bundle.
 
-## Prerequisites
+## Requirements
 
-- PHP 8.3+ with the extensions required by Laravel 13.
+For the Next.js runtime:
+
+- Node.js and npm compatible with the installed Next.js version.
+
+For the Laravel runtime:
+
+- PHP 8.3 or newer.
 - Composer 2.x.
-- Node.js and npm compatible with Vite 8.
-- SQLite enabled in PHP for the default local setup, or credentials for another configured database.
-- Internet access in development/deployment for the current CDN and browser-side external API integrations.
+- SQLite enabled for the default local database, or another Laravel-supported database configured in `.env`.
 
-## Installation and local setup
+Both runtimes need internet access when browser-side CDN assets or external content integrations are enabled.
 
-From the project root:
+## Local setup
+
+### Next.js
+
+```bash
+npm install
+npm run dev
+```
+
+Open `http://localhost:3000`.
+
+Create a production build with:
+
+```bash
+npm run build
+npm run start
+```
+
+The build output confirms the App Router pages for `/`, `/admin`, and `/json-generator`.
+
+### Laravel
 
 ```bash
 composer install
 cp .env.example .env
 php artisan key:generate
-```
-
-For the default SQLite setup, create the database file if it does not already exist:
-
-```bash
 touch database/database.sqlite
-```
-
-Review `.env` and then run the migrations:
-
-```bash
 php artisan migrate
-```
-
-The optional default seeder creates a local test user:
-
-```bash
-php artisan db:seed
-```
-
-Create the public storage symlink if you add public user-uploaded files:
-
-```bash
-php artisan storage:link
-```
-
-Install and build frontend dependencies:
-
-```bash
-npm install
-npm run build
-```
-
-Start the local server:
-
-```bash
 php artisan serve
 ```
 
 Open `http://localhost:8000`.
 
-Laravel’s combined setup script is also available:
+The optional Laravel setup shortcut is:
 
 ```bash
 composer run setup
 ```
 
-That script installs PHP dependencies, creates `.env` when missing, generates the application key, runs migrations, installs npm packages, and builds the Vite assets.
+It installs Composer dependencies, creates the environment file when missing, generates an application key, runs migrations, installs npm dependencies, and runs the repository’s `npm run build` command. Because that npm script is currently the Next.js build, use the explicit Laravel steps when you only want to start the Blade runtime.
 
-## Application routes
+## Routes
 
-| Method | URI | Name | Purpose |
-| --- | --- | --- | --- |
-| GET | `/` | `home` | Main portfolio page |
-| GET | `/admin` | `admin` | Admin placeholder view |
-| GET | `/json-generator` | `json-generator` | JSON generator view |
+Both runtimes expose these page URLs:
 
-There is currently no `routes/api.php`, public JSON API, or token-authenticated API surface.
+| Method | URI | Next.js page | Laravel route | Purpose |
+| --- | --- | --- | --- | --- |
+| GET | `/` | `app/page.tsx` | `PortfolioController@home` | Main portfolio |
+| GET | `/admin` | `app/admin/page.tsx` | `PortfolioController@admin` | Static admin placeholder |
+| GET | `/json-generator` | `app/json-generator/page.tsx` | `PortfolioController@jsonGenerator` | Portfolio JSON generator |
 
-## Running tests and checks
+Laravel also has `api/index.php` as a thin entry point to `public/index.php`. There is no `routes/api.php`, public JSON API, authentication endpoint, webhook, or token-authenticated API surface.
 
-Run the Laravel test suite:
+## Project structure
 
-```bash
-php artisan test
+```text
+app/
+  page.tsx                 Next.js portfolio page
+  layout.tsx               Next metadata, global styles, CDN styles, Three.js loader
+  admin/page.tsx           Next.js admin placeholder
+  json-generator/page.tsx  Next.js client-side JSON generator
+  globals.css              Small Next/global overrides
+components/
+  ScrollSpy.tsx            Active navigation section tracking
+  ScrollReveal.tsx         IntersectionObserver-based reveal behavior
+public/
+  index.js                 Main browser renderer and external content loaders
+  js/i18n.js               English/Japanese translations and language persistence
+  js/theme.js              Theme state and localized theme controls
+  js/main.js               Legacy navigation, accordion, and animation behavior
+  js/profile-card.js       External profile-card rendering
+  js/technology-skills-globe.js  Three.js globe and hexagonal technology icons
+  user-data/data.js        English/Japanese portfolio data
+  user-data/urls.js        External integration URL builders
+  css/style.css            Shared portfolio layout and component styles
+  images/                  Profile and public image assets
+resources/views/           Laravel Blade versions of the pages
+routes/                    Laravel web and console routes
+app/Http/Controllers/      Laravel page controller
+database/                  Laravel migrations, factories, and seeders
+tests/                     PHPUnit tests
+next.config.ts             Next.js configuration
+vercel.json                Vercel Next.js deployment configuration
+README.md                  Project usage and architecture guide
+SPEC.md                    Detailed implementation specification
 ```
 
-The Composer shortcut runs the same suite after clearing configuration:
+## Portfolio data and localization
 
-```bash
-composer test
-```
+Edit `public/user-data/data.js` to update the bilingual bio, skills, experience, education, contact links, footer links, and related labels. The module selects `en` or `jp` from `localStorage.lang` through `public/js/i18n.js`.
 
-The project currently uses PHPUnit 12; no Pest dependency or Pest test suite is configured. Useful additional checks are:
+Static labels use `data-i18n` attributes in the page markup. `public/index.js` calls `applyTranslations()` after the page shell is rendered. Changing language stores the new value and reloads the page so all data and labels are rebuilt consistently. Add new static labels to both translation dictionaries before adding a new `data-i18n` key.
+
+Theme labels are translated in `public/js/theme.js`. Theme preference is stored separately from language preference under `portfolio-theme`.
+
+## External browser integrations
+
+The browser reads public external endpoints configured in `public/user-data/urls.js`:
+
+- GitHub profile/repository information.
+- GitConnected portfolio information.
+- Pinned repositories through `pinned.berrysauce.dev`.
+- Medium RSS through `api.rss2json.com`.
+
+These requests are non-transactional and may be affected by CORS, rate limits, network failures, or third-party changes. The UI falls back to empty/error states where supported. No application credentials are currently required for these reads.
+
+## Verification
+
+Recommended checks after changes:
 
 ```bash
 npm run build
+php artisan test
 php artisan view:cache
 php artisan route:list
 git diff --check
 ```
 
-## Environment configuration
-
-Important local defaults from `.env.example` include:
-
-```dotenv
-APP_ENV=local
-APP_DEBUG=true
-APP_URL=http://localhost:8000
-DB_CONNECTION=sqlite
-SESSION_DRIVER=database
-CACHE_STORE=database
-QUEUE_CONNECTION=database
-FILESYSTEM_DISK=local
-MAIL_MAILER=log
-```
-
-For production:
-
-- Set a strong `APP_KEY`, correct `APP_URL`, and `APP_ENV=production`.
-- Set `APP_DEBUG=false`.
-- Configure the production database and run migrations deliberately.
-- Use HTTPS and configure the web server/proxy correctly.
-- Replace the `log` mailer with a real mail provider when email delivery is required.
-- Configure Redis, S3, or another service only when the corresponding application feature is introduced.
-- Keep secrets in the deployment environment, never in committed source files.
+`npm run build` validates the Next.js TypeScript application. `php artisan test`, view caching, and route listing validate the Laravel side. There is currently no dedicated browser end-to-end test suite.
 
 ## Deployment
 
-A typical deployment sequence is:
+### Vercel / Next.js
+
+`vercel.json` selects the Next.js framework and uses `npm run build`. Deploy the repository as a Next.js project with the required public assets available under `public/`.
+
+### Laravel server
+
+For a Laravel deployment:
 
 ```bash
 composer install --no-dev --prefer-dist --optimize-autoloader
-npm ci
-npm run build
 php artisan migrate --force
-php artisan storage:link
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 ```
 
-Point the web server document root at the project’s `public/` directory. Ensure `storage/` and `bootstrap/cache/` are writable by the application process. If background jobs are added, run a supervised worker using the configured queue connection:
+Point the web server document root at `public/`. Keep `APP_KEY` and any future credentials in the deployment environment, set `APP_DEBUG=false`, use HTTPS, and make `storage/` and `bootstrap/cache/` writable by the application process.
 
-```bash
-php artisan queue:work database --sleep=3 --tries=3
-```
+The current project has no custom queued jobs or scheduled tasks. A queue worker and scheduler are not required for the existing portfolio pages.
 
-The current application does not define custom queued jobs or scheduled tasks, so a worker and scheduler are not required for the existing portfolio pages.
+## Maintenance notes
 
-## Project structure
+- Keep the skill categories in `public/index.js` aligned with the technology list in `public/js/technology-skills-globe.js` when visible skills change.
+- Keep English and Japanese data structures aligned in `public/user-data/data.js`.
+- Update both Next and Blade markup when a shared static label or page structure changes.
+- Preserve responsive breakpoints, reduced-motion behavior, and readable light/dark theme contrast.
+- Treat external response data as untrusted input and keep rendering escaped or safely templated.
+- Protect any future admin write operations with authentication, authorization, CSRF protection, validation, and server-side persistence.
 
-```text
-app/                    Laravel controllers and models
-database/               Migrations, SQLite database, and seeders
-public/                 Active portfolio JavaScript, CSS, user data, and public assets
-resources/views/        Blade page views
-resources/js/           Vite entry point
-routes/                 Web and console routes
-tests/                  PHPUnit feature/unit tests
-SPEC.md                 Current technical specification
-```
-
-## Updating the portfolio
-
-- Edit portfolio content in `public/user-data/data.js`.
-- Update skill block categories and rendering in `public/index.js`.
-- Update theme behavior in `public/js/theme.js` and globe behavior in `public/js/technology-skills-globe.js`.
-- Update page structure in `resources/views/home.blade.php`.
-- Rebuild with `npm run build` after changes that affect the Vite pipeline.
-
-See [`SPEC.md`](SPEC.md) for the system architecture, data model, routes, security posture, integrations, queue configuration, and operational details.
+See [`SPEC.md`](SPEC.md) for the detailed system specification and known limitations.
