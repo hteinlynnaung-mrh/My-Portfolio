@@ -1,5 +1,9 @@
 # Portfolio Project Documentation
 
+This project is now a Laravel 13 application. The portfolio is served from the
+`home` route, with the admin dashboard and JSON generator available at
+`/admin` and `/json-generator`. Static frontend assets are kept in `public/`.
+
 Welcome to the comprehensive documentation for the **Htein Lynn Aung Portfolio**. This document provides an in-depth view of the project's architecture, technologies, and how to maintain it.
 
 ---
@@ -10,7 +14,7 @@ This portfolio is a modern, responsive web application designed to showcase prof
 - **Interactive 3D Visuals**: A skill sphere that reacts to mouse movements.
 - **Dynamic Content**: Data-driven rendering using `lit-html`.
 - **Multi-language Support**: Seamless switching between English and Japanese.
-- **Real-time Analytics**: A visitor counter powered by Firebase.
+- **Laravel Routing**: Portfolio, admin, and JSON-generator pages are served through Laravel routes.
 
 ---
 
@@ -29,7 +33,7 @@ This portfolio is a modern, responsive web application designed to showcase prof
 - **FontAwesome & DevIcons**: Comprehensive icon sets for professional presentation.
 
 ### Backend & Services
-- **Firebase (Firestore)**: Manages the real-time visitor counter.
+- **Laravel 13**: Provides the application bootstrap, routing, Blade views, and PHP runtime.
 - **GitHub API**: Dynamically fetches repository statistics.
 - **Medium RSS Feed**: Integrates the latest blog posts directly into the site.
 
@@ -69,12 +73,6 @@ Skills are managed in the `skills` array within `data.js`. Each skill object req
 - `icon`: The CSS class for the icon (e.g., `devicon-react-original`).
 - `color`: The accent color for the 3D sphere (e.g., `#61DAFB`).
 
-### Configuring Firebase (Visitor Counter)
-The Firebase configuration is located in [index.html](file:///Users/hteinlynnaung/Desktop/Portfolio/index.html) near the bottom. To use your own counter:
-1. Create a Firebase project.
-2. Enable Firestore.
-3. Replace the `firebaseConfig` object with your project's credentials.
-
 ---
 
 ## 🚀 Deployment
@@ -86,8 +84,8 @@ The project is designed for static hosting. Popular options include:
 ---
 
 ## 📝 Maintenance
-- **Updating Dependencies**: The project uses CDN-hosted scripts (Three.js, lit-html). To update, simply change the version numbers in the script tags within `index.html` or `js/` files.
+- **Updating Dependencies**: The project uses Laravel Composer dependencies and CDN-hosted frontend scripts. Update PHP dependencies with Composer and frontend CDN versions in `resources/views/home.blade.php`.
 - **Adding New Sections**: 
-  1. Add a new `section` tag in `index.html`.
+  1. Add a new `section` tag in `resources/views/home.blade.php`.
   2. Create a rendering function in `index.js`.
   3. Update `data.js` with the corresponding content.

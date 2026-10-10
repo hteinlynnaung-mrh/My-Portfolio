@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Resume JSON Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans|Raleway&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="{{ asset('css/animate.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+  <style>
+    body {
+      font-family: "Open Sans", sans-serif;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    .colorlib-narrow-content {
+      padding: 0 2.5em;
+    }
+
+    .generator-section {
+      margin-top: 40px;
+    }
+
+    fieldset {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border: none;
+    }
+
+    .legend {
+      color: #2c98f0;
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: #2c98f0;
+      border-color: #2c98f0;
+    }
+
+    .btn-success {
+      background: #f9bf3f;
+      border-color: #f9bf3f;
+      color: #333;
+    }
+
+    .section {
+      border: 1px solid #eee;
+      border-radius: 4px;
+      padding: 15px;
+      margin: 10px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #output {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .home-link-wrapper {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
+
+    .home-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .home-link:hover {
+      background: #f9bf3f;
+      color: #333;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+    }
+  </style>
+      <script type="module" src="{{ asset('index.js') }}"></script>
+      <script type="module" src="{{ asset('js/main.js') }}"></script>
+</head>
+
+<body>
+  <div class="home-link-wrapper">
+    <a href="{{ route('home') }}" class="home-link">
+      <i class="fa-solid fa-arrow-left"></i> Home
+    </a>
+  </div>
+
+  <div class="colorlib-narrow-content generator-section">
+    <div class="row row-bottom-padded-sm animate-box" data-animate-effect="fadeInLeft">
+      <div class="about-desc text-center">
+        <h1>Resume JSON <span style="color: #f9bf3f">Generator</span></h1>
+        <p>Generate structured JSON data for your portfolio website</p>
+      </div>
+    </div>
+
+    <form id="resumeForm">
+      <!-- Bio -->
+      <fieldset>
+        <div class="legend">Bio</div>
+        <div id="bioFields">
+          <textarea name="bio"></textarea>
+        </div>
+        <button type="button" class="btn btn-default" onclick="addField('bioFields', 'textarea')">
+          <i class="fa fa-plus"></i> Add Bio Line
+        </button>
+      </fieldset>
+
+      <!-- Skills -->
+      <fieldset>
+        <div class="legend">Skills</div>
+        <select id="skillsSelect" multiple size="20"></select>
+        <input type="text" id="newSkill" placeholder="Add new skill..." />
+        <button type="button" class="btn btn-primary" onclick="addNewSkill()">
+          <i class="fa fa-plus"></i> Add Skill
+        </button>
+      </fieldset>
+
+      <!-- Experience -->
+      <fieldset>
+        <div class="legend">Experience</div>
+        <div id="experienceFields"></div>
+        <button type="button" class="btn btn-default" onclick="addExperience()">
+          <i class="fa fa-plus"></i> Add Experience
+        </button>
+      </fieldset>
+
+      <!-- Education -->
+      <fieldset>
+        <div class="legend">Education</div>
+        <div id="educationFields"></div>
+        <button type="button" class="btn btn-default" onclick="addEducation()">
+          <i class="fa fa-plus"></i> Add Education
+        </button>
+      </fieldset>
+
+      <!-- Contact Links -->
+      <fieldset>
+        <div class="legend">Contact Links</div>
+        <div id="contactFields"></div>
+        <button type="button" class="btn btn-default" onclick="addContact()">
+          <i class="fa fa-plus"></i> Add Contact Link
+        </button>
+      </fieldset>
+
+      <!-- Footer -->
+      <fieldset>
+        <div class="legend">Footer</div>
+        <div id="footerFields"></div>
+        <button type="button" class="btn btn-default" onclick="addFooter()">
+          <i class="fa fa-plus"></i> Add Footer Section
+        </button>
+      </fieldset>
+
+      <br />
+      <button type="submit" class="btn btn-success">
+        <i class="fa fa-code"></i> Generate JSON
+      </button>
+      <button type="button" class="btn btn-info" onclick="copyJSON()">
+        <i class="fa fa-copy"></i> Copy to Clipboard
+      </button>
+    </form>
+
+    <pre id="output"></pre>
+
+    <script>
+      const skillsList = [
+        "HTML5",
+        "CSS",
+        "Bootstrap",
+        "Tailwind CSS",
+        "React",
+        "JavaScript",
+        "Java",
+        "Spring Boot",
+        "PHP",
+        "Laravel",
+        "Golang",
+        "Git and GitHub",
+        "MySQL",
+        "PostgreSQL",
+        "MongoDB",
+        "Docker",
+        "JLPT-N2",
+      ];
+
+      const skillsSelect = document.getElementById("skillsSelect");
+
+      function populateSkills() {
+        skillsSelect.innerHTML = "";
+        skillsList.forEach((skill) => {
+          const opt = document.createElement("option");
+          opt.value = skill;
+          opt.textContent = skill;
+          skillsSelect.appendChild(opt);
+        });
+      }
+      populateSkills();
+
+      function addNewSkill() {
+        const newSkill = document.getElementById("newSkill").value.trim();
+        if (newSkill && !skillsList.includes(newSkill)) {
+          skillsList.push(newSkill);
+          populateSkills();
+          document.getElementById("newSkill").value = "";
+        }
+      }
+
+      function addField(containerId, type) {
+        const container = document.getElementById(containerId);
+        const el = document.createElement(type);
+        if (type === "textarea") el.name = containerId;
+        if (type === "input") el.type = "text";
+        el.name = containerId;
+        container.appendChild(el);
+      }
+
+      function addExperience() {
+        const container = document.getElementById("experienceFields");
+        const div = document.createElement("div");
+        div.className = "section";
+        div.innerHTML = `
+    <input type="text" placeholder="Title" name="exp_title">
+    <input type="text" placeholder="Duration" name="exp_duration">
+    <input type="text" placeholder="Subtitle" name="exp_subtitle">
+    <textarea placeholder="Details (comma separated)" name="exp_details"></textarea>
+    <select name="exp_tags" multiple size="5">
+      ${skillsList
+            .map((skill) => `<option value="${skill}">${skill}</option>`)
+            .join("")}
+    </select>
+    <input type="text" placeholder="Icon" name="exp_icon">
+  `;
+        container.appendChild(div);
+      }
+
+      function addEducation() {
+        const container = document.getElementById("educationFields");
+        const div = document.createElement("div");
+        div.className = "section";
+        div.innerHTML = `
+    <input type="text" placeholder="Title" name="edu_title">
+    <input type="text" placeholder="Duration" name="edu_duration">
+    <input type="text" placeholder="Subtitle" name="edu_subtitle">
+    <textarea placeholder="Details (comma separated)" name="edu_details"></textarea>
+    <select name="edu_tags" multiple size="5">
+      ${skillsList
+            .map((skill) => `<option value="${skill}">${skill}</option>`)
+            .join("")}
+    </select>
+    <input type="text" placeholder="Icon" name="edu_icon">
+  `;
+        container.appendChild(div);
+      }
+
+      function addContact() {
+        const container = document.getElementById("contactFields");
+        const div = document.createElement("div");
+        div.className = "section";
+        div.innerHTML = `
+    <input type="text" placeholder="Label" name="contact_label">
+    <input type="text" placeholder="Link" name="contact_link">
+    <input type="text" placeholder="Icon" name="contact_icon">
+  `;
+        container.appendChild(div);
+      }
+
+      function addFooter() {
+        const container = document.getElementById("footerFields");
+        const div = document.createElement("div");
+        div.className = "section";
+        div.innerHTML = `
+    <input type="text" placeholder="Label" name="footer_label">
+    <textarea placeholder="Footer items (text|link, one per line)" name="footer_data"></textarea>
+  `;
+        container.appendChild(div);
+      }
+
+      document
+        .getElementById("resumeForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const bioArr = Array.from(
+            document.querySelectorAll("#bioFields textarea")
+          )
+            .map((el) => el.value)
+            .filter(Boolean);
+          const skillsArr = Array.from(
+            document.querySelectorAll("#skillsSelect option:checked")
+          ).map((el) => el.value);
+
+          const experienceArr = Array.from(
+            document.querySelectorAll("#experienceFields .section")
+          ).map((sec) => ({
+            title: sec.querySelector("[name=exp_title]").value,
+            duration: sec.querySelector("[name=exp_duration]").value,
+            subtitle: sec.querySelector("[name=exp_subtitle]").value,
+            details: sec
+              .querySelector("[name=exp_details]")
+              .value.split(",")
+              .map((s) => s.trim())
+              .filter(Boolean),
+            tags: sec
+              .querySelector("[name=exp_tags]")
+              .value.split(",")
+              .map((tag) => tag.trim())
+              .filter(Boolean),
+            icon: sec.querySelector("[name=exp_icon]").value,
+          }));
+
+          const educationArr = Array.from(
+            document.querySelectorAll("#educationFields .section")
+          ).map((sec) => ({
+            title: sec.querySelector("[name=edu_title]").value,
+            duration: sec.querySelector("[name=edu_duration]").value,
+            subtitle: sec.querySelector("[name=edu_subtitle]").value,
+            details: sec
+              .querySelector("[name=edu_details]")
+              .value.split(",")
+              .map((s) => s.trim())
+              .filter(Boolean),
+            tags: Array.from(
+              sec.querySelector("[name=edu_tags]").selectedOptions
+            ).map((opt) => opt.value),
+            icon: sec.querySelector("[name=edu_icon]").value,
+          }));
+
+          const contactLinksArr = Array.from(
+            document.querySelectorAll("#contactFields .section")
+          ).map((sec) => ({
+            label: sec.querySelector("[name=contact_label]").value,
+            link: sec.querySelector("[name=contact_link]").value,
+            icon: sec.querySelector("[name=contact_icon]").value,
+          }));
+
+          const footerArr = Array.from(
+            document.querySelectorAll("#footerFields .section")
+          ).map((sec) => ({
+            label: sec.querySelector("[name=footer_label]").value,
+            data: sec
+              .querySelector("[name=footer_data]")
+              .value.split("\n")
+              .map((line) => {
+                const [text, link] = line.split("|").map((s) => s.trim());
+                return link ? { text, link } : text;
+              })
+              .filter(Boolean),
+          }));
+
+          const json = {
+            bio: bioArr,
+            skills: skillsArr,
+            experience: experienceArr,
+            education: educationArr,
+            contactLinks: contactLinksArr,
+            footer: footerArr,
+          };
+
+          document.getElementById("output").textContent = JSON.stringify(
+            json,
+            null,
+            2
+          );
+        });
+
+      function copyJSON() {
+        const text = document.getElementById("output").textContent;
+        navigator.clipboard.writeText(text).then(() => {
+          alert("JSON copied! Add this to your portfolio website -> data.js.");
+        });
+      }
+      // --- Prefill Data ---
+      const prefillData = {
+        bio: [
+          "Hi, I’m Htein Lynn Aung, a Software Engineering student at North Chiang Mai University.Currently, I am deeply immersed in the fundamentals of Computer Science and the Software Development Life Cycle (SDLC). I believe that building great software starts with a strong architectural foundation and a clear understanding of the development process.My journey doesn't stop at development; I am highly motivated to expand my expertise into Cloud Engineering and DevOps. I am passionate about bridging the gap between code and infrastructure to build scalable, efficient, and automated systems.",
+        ],
+        skills: [
+          "HTML5",
+          "CSS",
+          "Bootstrap",
+          "Tailwind CSS",
+          "React",
+          "JavaScript",
+          "Java",
+          "Spring Boot",
+          "PHP",
+          "Laravel",
+          "Golang",
+          "Git and GitHub",
+          "MySQL",
+          "PostgreSQL",
+          "MongoDB",
+          "Docker",
+          "JLPT-N2",
+        ],
+        experience: [
+          {
+            title: "Production Supervisor",
+            duration: "December 2019 - July 2023",
+            subtitle: "Hana Seimitsu Co.,Ltd.  /  Yangon, Myanmar",
+            details: ["Experienced Production Supervisor with over 3 years of expertise at Hana Seimitsu Co., Ltd. Specialize in manufacturing precision molds using advanced automation systems to optimize production efficiency and quality."],
+            tags: [
+              "Automation Systems",
+              "AutoCad 2D",
+              "Production Efficiency",
+              "Quality Control"
+            ],
+            icon: "heartbeat",
+          },
+          {
+            title: "Special Skills Worker-1(Restaurant)",
+            duration: "January 2024 - April 2025",
+            subtitle: "Ippinko Co.,Ltd.  /  Yokohama, Japan",
+            details: [
+              "Experienced Cook with over a year of expertise in Japanese and Chinese cuisine. Beyond culinary skills, I have a solid understanding of restaurant operational systems, ensuring efficient workflow and service quality.",
+            ],
+            tags: [
+              "Japanese Cuisine",
+              "Chinese Cuisine",
+              "Restaurant Operations",
+              "Workflow Optimization"
+            ],
+            icon: "qrcode",
+          },
+        ],
+        
+        "education": [
+          {
+            "title": "Bachelor of Engineering in Software Engineering",
+            "duration": "June 2025 - May 2028",
+            "subtitle": "North Chiang Mai University, Thailand",
+            "details": [
+               "I am currently pursuing a Bachelor of Engineering in Software Engineering at North Chiang Mai University. I'm on a fast-track program with three semesters per year, aiming to complete my degree within three consecutive years."
+            ],
+            "tags": [
+              "Software Engineering",
+              "Computer Science",
+              "Programming",
+              "Software Development"
+            ],
+            "icon": "graduation-cap"
+          },
+          {
+            "title": "Diploma in Electronic Communication Engineering",
+            "duration": "December 2016 - October 2019",
+            "subtitle": "Association of Govenment Technical Institute (AGTI), Myanmar",
+            "details": [
+              "I attended Government Technical College (Wakema) from 2016 to 2019, specializing in Electronic Communication. I successfully completed the course with a credit standing."
+            ],
+            "tags": [
+              "Electronic Communication",
+              "Programming & Networking",
+              "Signal Processing",
+              "Circuit Design"
+            ],
+            "icon": "graduation-cap"
+          },
+        ],
+        "contactLinks": [
+          {
+            "label": "Email",
+            "link": "mailto:hteinlynnaung.1111@gmail.com",
+            "icon": "fa fa-envelope"
+          },
+          {
+            "label": "LinkedIn",
+            "link": "https://www.linkedin.com/in/htein-software-engineer/",
+            "icon": "fa-brands fa-linkedin"
+          },
+          {
+            "label": "GitHub",
+            "link": "https://github.com/hteinlynnaung-mrh",
+            "icon": "fa-brands fa-github"
+          },
+          {
+            "label": "Htein's Bakery",
+            "link": "https://htein-bakery.vercel.app/",
+            "icon": "fa fa-coffee"
+          }
+        ],
+        "footer": [
+          {
+            "label": "Links",
+            "data": [
+            {
+              "text": "Buy me a coffee",
+              "link": "https://htein-bakery.vercel.app/"
+            },
+            {
+              "text": "Github",
+              "link": "https://github.com/hteinlynnaung-mrh/hteinlynnaung-mrh.github.io"
+            }
+            ]
+          },
+          {
+            "label": "Pages",
+            "data": [
+              {
+                "text": "Admin Dashboard",
+                "link": "/admin"
+              },
+              {
+                "text": "Generate JSON data",
+                "link": "/json-generator"
+              }
+            ]
+          },
+          {
+            "label": "copyright-text",
+            "data": [
+            "Built with HTML, CSS, JavaScript, and ❤️"
+            ]
+          }
+      ]
+      };
+
+      // --- Populate on Load ---
+      window.addEventListener("DOMContentLoaded", () => {
+        // Bio
+        const bioContainer = document.getElementById("bioFields");
+        bioContainer.innerHTML = "";
+        prefillData.bio.forEach((line) => {
+          const t = document.createElement("textarea");
+          t.value = line;
+          bioContainer.appendChild(t);
+        });
+
+        // Skills
+        populateSkills();
+        Array.from(skillsSelect.options).forEach((opt) => {
+          if (prefillData.skills.includes(opt.value)) opt.selected = true;
+        });
+
+        prefillData.experience.forEach((exp) => {
+          addExperience();
+          const sec = document.querySelectorAll("#experienceFields .section");
+          const last = sec[sec.length - 1];
+          last.querySelector("[name=exp_title]").value = exp.title;
+          last.querySelector("[name=exp_duration]").value = exp.duration;
+          last.querySelector("[name=exp_subtitle]").value = exp.subtitle;
+          last.querySelector("[name=exp_details]").value = exp.details.join(", ");
+          Array.from(last.querySelector("[name=exp_tags]").options).forEach(
+            (opt) => {
+              if (exp.tags.includes(opt.value)) opt.selected = true;
+            }
+          );
+          last.querySelector("[name=exp_icon]").value = exp.icon;
+        });
+
+
+        // Education
+        prefillData.education.forEach((edu) => {
+          addEducation();
+          const sec = document.querySelectorAll("#educationFields .section");
+          const last = sec[sec.length - 1];
+          last.querySelector("[name=edu_title]").value = edu.title;
+          last.querySelector("[name=edu_duration]").value = edu.duration;
+          last.querySelector("[name=edu_subtitle]").value = edu.subtitle;
+          last.querySelector("[name=edu_details]").value =
+            edu.details.join(", ");
+          Array.from(last.querySelector("[name=edu_tags]").options).forEach(
+            (opt) => {
+              if (edu.tags.includes(opt.value)) opt.selected = true;
+            }
+          );
+          last.querySelector("[name=edu_icon]").value = edu.icon;
+        });
+
+        // Contact Links
+        prefillData.contactLinks.forEach((contact) => {
+          addContact();
+          const sec = document.querySelectorAll("#contactFields .section");
+          const last = sec[sec.length - 1];
+          last.querySelector("[name=contact_label]").value = contact.label;
+          last.querySelector("[name=contact_link]").value = contact.link;
+          last.querySelector("[name=contact_icon]").value = contact.icon;
+        });
+
+        // Footer
+        prefillData.footer.forEach((foot) => {
+          addFooter();
+          const sec = document.querySelectorAll("#footerFields .section");
+          const last = sec[sec.length - 1];
+          last.querySelector("[name=footer_label]").value = foot.label;
+          last.querySelector("[name=footer_data]").value = foot.data
+            .map((item) =>
+              typeof item === "string"
+                ? item
+                : `${item.text}|${item.link || ""}`
+            )
+            .join("\n");
+        });
+      });
+    </script>
+</body>
+
+</html>
