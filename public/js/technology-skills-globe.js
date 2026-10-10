@@ -92,7 +92,7 @@ class TechnologySkillsGlobe {
 
   addGlobe() {
     const core = new THREE.Mesh(
-      new THREE.SphereGeometry(2.25, 36, 24),
+      new THREE.SphereGeometry(1.85, 36, 24),
       new THREE.MeshBasicMaterial({
         color: 0x173b76,
         transparent: true,
@@ -104,7 +104,7 @@ class TechnologySkillsGlobe {
     this.globeWorld.add(core);
 
     const grid = new THREE.Mesh(
-      new THREE.SphereGeometry(2.3, 18, 12),
+      new THREE.SphereGeometry(1.9, 18, 12),
       new THREE.MeshBasicMaterial({
         color: 0x4a9dff,
         transparent: true,
@@ -126,7 +126,7 @@ class TechnologySkillsGlobe {
         depthWrite: false,
       })
     );
-    atmosphere.scale.set(7.2, 7.2, 1);
+    atmosphere.scale.set(5.9, 5.9, 1);
     this.scene.add(atmosphere);
     this.globeCore = core;
     this.globeGrid = grid;
@@ -245,7 +245,7 @@ class TechnologySkillsGlobe {
   }
 
   async addNodes() {
-    const radius = 3.2;
+    const radius = 2.6;
     TECHNOLOGIES.forEach((technology, index) => {
       const y = 1 - (index / (TECHNOLOGIES.length - 1)) * 2;
       const ring = Math.sqrt(1 - y * y);
@@ -290,7 +290,7 @@ class TechnologySkillsGlobe {
           color: 0xffffff,
         })
       );
-      mesh.scale.set(0.7, 0.7, 1);
+      mesh.scale.set(0.55, 0.55, 1);
       mesh.userData.node = node;
       node.mesh = mesh;
       group.add(mesh);
