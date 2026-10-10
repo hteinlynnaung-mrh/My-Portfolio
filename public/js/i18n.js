@@ -118,9 +118,15 @@ export function getLanguage() {
 }
 
 export function setLanguage(lang) {
+  if (!translations[lang] || lang === currentLanguage) return;
+
   currentLanguage = lang;
   localStorage.setItem('lang', lang);
-  window.location.reload(); // Simplest way to re-render everything
+  document.documentElement.lang = lang === 'jp' ? 'ja' : lang;
+  applyTranslations();
+  window.dispatchEvent(new CustomEvent('languagechange', {
+    detail: { language: lang }
+  }));
 }
 
 export function t(key) {

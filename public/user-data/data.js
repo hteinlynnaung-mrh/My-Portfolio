@@ -198,13 +198,9 @@ const allData = {
   }
 };
 
-const lang = getLanguage();
-const data = allData[lang] || allData.en;
+export function getPortfolioData() {
+  const lang = getLanguage();
+  return allData[lang] || allData.en;
+}
 
-export const bio = data.bio;
-export const skills = data.skills;
-export const experience = data.experience;
-export const education = data.education;
-export const contactLinks = data.contactLinks;
-export const footer = data.footer;
-export default data;
+export default getPortfolioData();

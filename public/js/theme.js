@@ -34,3 +34,7 @@ document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
 themeQuery.addEventListener?.("change", (event) => {
   if (!localStorage.getItem(THEME_STORAGE_KEY)) setTheme(event.matches ? "dark" : "light", false);
 });
+
+window.addEventListener("languagechange", () => {
+  updateThemeControls(document.documentElement.dataset.theme || "light");
+});

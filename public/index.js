@@ -1,10 +1,5 @@
 import {
-  bio,
-  skills,
-  education,
-  experience,
-  footer,
-  contactLinks,
+  getPortfolioData,
 } from "./user-data/data.js";
 import { html, render } from "https://unpkg.com/lit-html?module";
 import { t, applyTranslations, setLanguage } from "./js/i18n.js";
@@ -405,19 +400,22 @@ function getBlogDate(publishDate) {
   }
 }
 
-populateBio(bio, "bio");
+function renderLocalizedContent() {
+  const { bio, skills, education, experience, footer, contactLinks } = getPortfolioData();
 
-populateSkills(skills, "skills");
+  populateBio(bio, "bio");
+  populateSkills(skills, "skills");
+  populateExp_Edu(experience, "experience");
+  populateExp_Edu(education, "education");
+  populateLinks(footer, "footer");
+  populateContactLinks(contactLinks, "contact-links");
+}
+
+renderLocalizedContent();
 
 fetchBlogsFromMedium(medium);
 fetchReposFromGit(gitRepo);
 fetchGitConnectedData(gitConnected);
-
-populateExp_Edu(experience, "experience");
-populateExp_Edu(education, "education");
-
-populateLinks(footer, "footer");
-populateContactLinks(contactLinks, "contact-links");
 
 document
   .getElementById("btn-en")
@@ -429,3 +427,4 @@ document
 
 
 applyTranslations();
+window.addEventListener("languagechange", renderLocalizedContent);
