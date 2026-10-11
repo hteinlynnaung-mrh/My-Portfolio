@@ -1731,6 +1731,15 @@ body {
   transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
+/* Keep one theme control visible at each responsive layout size. */
+.theme-toggle-nav {
+  display: none;
+}
+
+.theme-toggle-sidebar {
+  display: flex;
+}
+
 .theme-toggle:hover,
 .theme-toggle:focus-visible {
   background: var(--hover-bg);
@@ -1761,6 +1770,16 @@ body {
 html[data-theme="dark"] .theme-toggle {
   border-color: rgba(190, 222, 255, 0.36);
   background: rgba(8, 20, 42, 0.56);
+}
+
+@media screen and (max-width: 992px) {
+  #colorlib-aside .theme-toggle-sidebar {
+    display: none !important;
+  }
+
+  .mobile-nav-bar .theme-toggle-nav {
+    display: inline-flex;
+  }
 }
 
 html[data-theme="dark"] #colorlib-aside {

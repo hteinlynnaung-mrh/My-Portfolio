@@ -13,12 +13,12 @@ export default function HomePage() {
         <div className="container-wrap">
           <div className="mobile-nav-bar no-print">
             <a href="#" className="js-colorlib-nav-toggle colorlib-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation menu"><i /></a>
-            <button className="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode"><i className="fa-solid fa-moon" aria-hidden="true" /><span className="theme-toggle-label">Dark mode</span></button>
+            <button className="theme-toggle theme-toggle-nav" type="button" data-theme-toggle aria-label="Switch to dark mode"><i className="fa-solid fa-moon" aria-hidden="true" /><span className="theme-toggle-label">Dark mode</span></button>
           </div>
           <aside id="colorlib-aside" role="complementary" className="border js-fullheight no-print">
             <div className="text-center">
               <div className="lang-switcher no-print"><button id="btn-en" className="lang-btn">EN</button><span className="lang-divider">|</span><button id="btn-jp" className="lang-btn">日本語</button></div>
-              <button className="theme-toggle no-print" type="button" data-theme-toggle aria-label="Switch to dark mode"><i className="fa-solid fa-moon" aria-hidden="true" /><span className="theme-toggle-label">Dark mode</span></button>
+              <button className="theme-toggle theme-toggle-sidebar no-print" type="button" data-theme-toggle aria-label="Switch to dark mode"><i className="fa-solid fa-moon" aria-hidden="true" /><span className="theme-toggle-label">Dark mode</span></button>
               <div className="author-img"><img id="profile-img" src="/images/profile.png" alt="Htein Lynn Aung" /></div>
               <h1 id="colorlib-logo"><Link href="/"><span data-i18n="profile_name">Htein Lynn Aung</span></Link></h1>
             </div>

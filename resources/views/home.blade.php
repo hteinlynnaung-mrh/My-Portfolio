@@ -61,7 +61,7 @@
             aria-label="Toggle navigation menu"
             ><i></i
           ></a>
-          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode">
+          <button class="theme-toggle theme-toggle-nav" type="button" data-theme-toggle aria-label="Switch to dark mode">
             <i class="fa-solid fa-moon" aria-hidden="true"></i>
             <span class="theme-toggle-label">Dark mode</span>
           </button>
@@ -77,7 +77,7 @@
               <span class="lang-divider">|</span>
               <button id="btn-jp" class="lang-btn">日本語</button>
             </div>
-            <button class="theme-toggle no-print" type="button" data-theme-toggle aria-label="Switch to dark mode">
+            <button class="theme-toggle theme-toggle-sidebar no-print" type="button" data-theme-toggle aria-label="Switch to dark mode">
               <i class="fa-solid fa-moon" aria-hidden="true"></i>
               <span class="theme-toggle-label">Dark mode</span>
             </button>
