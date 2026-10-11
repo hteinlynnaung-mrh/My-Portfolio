@@ -1203,6 +1203,54 @@ footer {
   margin-bottom: 40px;
 }
 
+.footer-links-card {
+  width: 100%;
+  padding: 1.2em;
+  border: 1px solid rgba(44, 152, 240, 0.2);
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffe2a6 0%, #ffd166 100%);
+  box-shadow: 0 12px 28px rgba(35, 55, 80, 0.14);
+}
+
+.footer-links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65em;
+}
+
+.footer-link-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  min-height: 72px;
+  padding: 1em 1.15em;
+  border: 1px solid rgba(38, 31, 18, 0.12);
+  border-radius: 12px;
+  color: #201a11;
+  background: rgba(255, 248, 231, 0.38);
+  font-size: 1.05em;
+  font-weight: 600;
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.footer-link-card i {
+  font-size: 0.8em;
+  opacity: 0.65;
+}
+
+.footer-link-card:hover,
+.footer-link-card:focus-visible {
+  color: #201a11;
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: 0 6px 14px rgba(80, 54, 12, 0.12);
+  transform: translateY(-2px);
+}
+
+.footer-links-card + .copyright-text {
+  margin-top: 1.25em;
+}
+
 footer ul {
   list-style: none;
   padding-left: 0px;
@@ -1238,6 +1286,10 @@ footer ul {
   footer {
     padding: 2em;
     flex-direction: column;
+  }
+
+  .footer-links-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1706,6 +1758,24 @@ html[data-theme="dark"] {
   --color: #edf5ff;
   --color-smooth: #d8e8fa;
   --input-border: #4f6d92;
+}
+
+html[data-theme="dark"] .footer-links-card {
+  border-color: rgba(142, 190, 235, 0.28);
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
+html[data-theme="dark"] .footer-link-card {
+  border-color: rgba(200, 220, 245, 0.16);
+  color: #edf5ff;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+html[data-theme="dark"] .footer-link-card:hover,
+html[data-theme="dark"] .footer-link-card:focus-visible {
+  color: #ffffff;
+  background: rgba(104, 200, 255, 0.16);
 }
 
 html,

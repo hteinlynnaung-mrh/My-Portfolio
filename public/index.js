@@ -300,6 +300,32 @@ function populateLinks(items, id) {
   const footer = document.getElementById(id);
   if (!footer || !items?.length) return;
 
+  const footerLinks = items
+    .filter((item) => item.label !== "copyright-text")
+    .flatMap((item) => item.data || []);
+
+  const copyright = items.find((item) => item.label === "copyright-text");
+
+  if (id === "footer") {
+    const footerTemplate = html`
+      <div class="footer-links-card" aria-label="Quick links">
+        <nav class="footer-links-grid">
+          ${footerLinks.map(
+            (data) => html`
+              <a class="footer-link-card" href="${data.link || "#"}">
+                <span>${data.text}</span>
+                <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+              </a>
+            `
+          )}
+        </nav>
+      </div>
+      ${copyright ? html`<div class="copyright-text no-print">${copyright.data.map((text) => html`<p>${text}</p>`)}</div>` : ""}
+    `;
+    render(footerTemplate, footer);
+    return;
+  }
+
   const linkTemplate = (data) => html`
     <li>
       <a
