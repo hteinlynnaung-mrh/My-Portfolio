@@ -142,13 +142,30 @@ The file contains parallel `en` and `jp` structures. It calls `getLanguage()` fr
 
 `public/user-data/urls.js` builds the external URLs for GitHub, Medium, GitConnected, and pinned repositories.
 
-### 5.2 Translation behavior
+### 5.2 JSON export contract
+
+`public/user-data/portfolio.json` is a committed export of the bilingual `data.js` content. It has this shape:
+
+```json
+{
+  "schemaVersion": 1,
+  "source": "public/user-data/data.js",
+  "languages": {
+    "en": { "bio": [], "skills": [], "experience": [], "education": [], "contactLinks": [], "footer": [] },
+    "jp": { "bio": [], "skills": [], "experience": [], "education": [], "contactLinks": [], "footer": [] }
+  }
+}
+```
+
+The export preserves the fields consumed by `public/index.js`: skill records include `name`, `icon`, and `color`; timeline records include `title`, `duration`, `subtitle`, `details`, `tags`, and `icon`; contact records include `label`, `link`, and `icon`; footer records include `label` and `data`. The export is not currently fetched by either runtime and does not replace the JavaScript source of truth.
+
+### 5.3 Translation behavior
 
 `public/js/i18n.js` contains English and Japanese dictionaries for navigation, section headings, skill groups, profile name, theme labels, profile labels, statistics, date phrases, footer labels, and contact text. `applyTranslations()` updates elements with `data-i18n` attributes. `setLanguage()` writes `localStorage.lang` and reloads the page.
 
 The profile name is localized as `Htein Lynn Aung` / `ティン リン アウン`. The HTML document language metadata is currently static (`en`) and is not dynamically changed when the user switches language.
 
-### 5.3 Theme behavior
+### 5.4 Theme behavior
 
 `public/js/theme.js` reads `portfolio-theme`, otherwise uses `prefers-color-scheme`, and updates `document.documentElement.dataset.theme`. All `[data-theme-toggle]` controls share the same state. The control icon, accessible label, pressed state, and visible label are updated for both English and Japanese.
 
@@ -258,11 +275,13 @@ Create the storage link only if public storage files are introduced. Ensure `sto
 5. The document `lang` attribute is not updated dynamically with the selected language.
 6. External services can change independently and are not contract-tested in this repository.
 7. The admin and JSON generator pages are prototypes; they do not persist data or enforce authentication.
+8. `public/user-data/portfolio.json` is a synchronized export artifact, not a database-backed API response.
 
 When changing the application:
 
 - update both translation dictionaries for every new localized key;
 - keep `en` and `jp` data shapes aligned;
+- regenerate `public/user-data/portfolio.json` after changing `public/user-data/data.js`;
 - preserve responsive and reduced-motion behavior;
 - verify both Next and Laravel route flows when shared assets or markup change;
 - run the build, Laravel tests, view cache, route list, and diff checks before delivery.

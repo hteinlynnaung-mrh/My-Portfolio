@@ -146,6 +146,8 @@ SPEC.md                    Detailed implementation specification
 
 Edit `public/user-data/data.js` to update the bilingual bio, skills, experience, education, contact links, footer links, and related labels. The module selects `en` or `jp` from `localStorage.lang` through `public/js/i18n.js`.
 
+The repository also includes [`public/user-data/portfolio.json`](public/user-data/portfolio.json), a generated, language-complete JSON snapshot of the same portfolio data. It is an export artifact for integrations, review, or future server-side persistence; the live browser renderer still imports `data.js` so language selection and JavaScript module behavior remain unchanged. Keep the JSON snapshot synchronized whenever `data.js` changes. Its top-level contract is `{ schemaVersion, source, languages }`, and each language contains `bio`, `skills`, `experience`, `education`, `contactLinks`, and `footer`.
+
 Static labels use `data-i18n` attributes in the page markup. `public/index.js` calls `applyTranslations()` after the page shell is rendered. Changing language stores the new value and reloads the page so all data and labels are rebuilt consistently. Add new static labels to both translation dictionaries before adding a new `data-i18n` key.
 
 Theme labels are translated in `public/js/theme.js`. Theme preference is stored separately from language preference under `portfolio-theme`.
@@ -201,6 +203,7 @@ The current project has no custom queued jobs or scheduled tasks. A queue worker
 
 - Keep the skill categories in `public/index.js` aligned with the technology list in `public/js/technology-skills-globe.js` when visible skills change.
 - Keep English and Japanese data structures aligned in `public/user-data/data.js`.
+- Regenerate `public/user-data/portfolio.json` from the current bilingual data whenever portfolio content changes.
 - Update both Next and Blade markup when a shared static label or page structure changes.
 - Preserve responsive breakpoints, reduced-motion behavior, and readable light/dark theme contrast.
 - Treat external response data as untrusted input and keep rendering escaped or safely templated.
