@@ -186,7 +186,7 @@ const allData = {
       {
         label: "ページ",
         data: [
-          { text: "管理者ダッシュボード", link: "/admin" },
+          { text: "管理者ダッシュボード", link: "http://127.0.0.1:5500/app-dashboard.html" },
           { text: "JSONデータの生成", link: "/json-generator" }
         ]
       },
