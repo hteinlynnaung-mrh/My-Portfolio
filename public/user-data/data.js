@@ -88,7 +88,7 @@ const allData = {
       {
         label: "Pages",
         data: [
-          { text: "Admin Dashboard", link: "/admin" },
+          { text: "Admin Dashboard", link: "http://127.0.0.1:5500/app-dashboard.html" },
           { text: "Generate JSON data", link: "/json-generator" }
         ]
       },
