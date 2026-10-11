@@ -88,7 +88,7 @@ const allData = {
       {
         label: "Pages",
         data: [
-          { text: "Admin Dashboard", link: "http://127.0.0.1:5500/app-dashboard.html" },
+          { text: "Admin Dashboard", link: "https://admin-dashboard-drab-rho.vercel.app/" },
           { text: "Generate JSON data", link: "/json-generator" }
         ]
       },
@@ -186,7 +186,7 @@ const allData = {
       {
         label: "ページ",
         data: [
-          { text: "管理者ダッシュボード", link: "http://127.0.0.1:5500/app-dashboard.html" },
+          { text: "管理者ダッシュボード", link: "https://admin-dashboard-drab-rho.vercel.app/" },
           { text: "JSONデータの生成", link: "/json-generator" }
         ]
       },
