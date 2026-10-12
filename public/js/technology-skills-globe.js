@@ -75,6 +75,7 @@ class TechnologySkillsGlobe {
     this.scene.add(this.globeWorld, this.nodeWorld);
     this.addGlobe();
     this.addStars();
+    this.addTwinkleStars();
     this.themeObserver = new MutationObserver(this.refreshTheme);
     this.themeObserver.observe(document.documentElement, {
       attributes: true,
@@ -155,6 +156,12 @@ class TechnologySkillsGlobe {
       this.stars.material.color.set(light ? 0x9aa8b8 : 0x9bcaff);
       this.stars.material.opacity = light ? 0.3 : 0.55;
     }
+    this.twinkleStars?.forEach((star, index) => {
+      star.material.color.set(light ? (index % 2 ? 0x6f89a8 : 0x8b6bb8) : (index % 2 ? 0x9fd9ff : 0xd8b6ff));
+      star.material.opacity = light ? 0.42 : 0.78;
+      star.material.blending = light ? THREE.NormalBlending : THREE.AdditiveBlending;
+      star.material.needsUpdate = true;
+    });
     this.links.forEach((link, index) => {
       link.line.material.color.set(
         light ? (index % 2 ? 0x3977b8 : 0x177da8) : index % 2 ? 0x5d86ff : 0x35dcff
@@ -223,6 +230,64 @@ class TechnologySkillsGlobe {
       })
     );
     this.scene.add(this.stars);
+  }
+
+  addTwinkleStars() {
+    const texture = this.twinkleTexture();
+    const light = document.documentElement.dataset.theme === "light";
+    this.twinkleStars = [];
+    for (let index = 0; index < 30; index += 1) {
+      const star = new THREE.Sprite(
+        new THREE.SpriteMaterial({
+          map: texture,
+          color: light ? (index % 2 ? 0x6f89a8 : 0x8b6bb8) : (index % 2 ? 0x9fd9ff : 0xd8b6ff),
+          transparent: true,
+          opacity: light ? 0.42 : 0.78,
+          blending: light ? THREE.NormalBlending : THREE.AdditiveBlending,
+          depthTest: false,
+          depthWrite: false,
+        })
+      );
+      const angle = index * 2.39996;
+      const radius = 2.8 + (index % 6) * 0.72;
+      star.position.set(
+        Math.cos(angle) * radius * 1.25,
+        Math.sin(angle) * radius * 0.62,
+        -3.4 - (index % 4) * 0.25
+      );
+      const size = 0.1 + (index % 4) * 0.035;
+      star.scale.set(size, size, 1);
+      star.userData.phase = index * 0.91;
+      star.userData.baseSize = size;
+      star.renderOrder = -2;
+      this.scene.add(star);
+      this.twinkleStars.push(star);
+    }
+  }
+
+  twinkleTexture() {
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = 128;
+    const context = canvas.getContext("2d");
+    const center = 64;
+    const glow = context.createRadialGradient(center, center, 0, center, center, 58);
+    glow.addColorStop(0, "rgba(255,255,255,1)");
+    glow.addColorStop(0.12, "rgba(255,255,255,.95)");
+    glow.addColorStop(0.34, "rgba(190,225,255,.4)");
+    glow.addColorStop(1, "rgba(190,225,255,0)");
+    context.fillStyle = glow;
+    context.fillRect(0, 0, 128, 128);
+    context.save();
+    context.translate(center, center);
+    context.rotate(Math.PI / 4);
+    const ray = context.createLinearGradient(0, -54, 0, 54);
+    ray.addColorStop(0, "rgba(255,255,255,0)");
+    ray.addColorStop(0.5, "rgba(255,255,255,.95)");
+    ray.addColorStop(1, "rgba(255,255,255,0)");
+    context.fillStyle = ray;
+    context.fillRect(-1.5, -54, 3, 108);
+    context.restore();
+    return new THREE.CanvasTexture(canvas);
   }
 
   async getIcon(className) {
@@ -620,6 +685,12 @@ class TechnologySkillsGlobe {
       item.particle.position.lerpVectors(item.link.from.group.position, item.link.to.group.position, progress);
     });
     this.stars.rotation.y += staticMode ? 0 : 0.0001;
+    this.twinkleStars?.forEach((star) => {
+      const twinkle = staticMode ? 1 : 0.68 + (Math.sin(time * 1.7 + star.userData.phase) + 1) * 0.23;
+      const size = star.userData.baseSize * (0.9 + twinkle * 0.18);
+      star.scale.set(size, size, 1);
+      star.material.opacity = (document.documentElement.dataset.theme === "light" ? 0.42 : 0.78) * twinkle;
+    });
     this.renderer.render(this.scene, this.camera);
   }
 
