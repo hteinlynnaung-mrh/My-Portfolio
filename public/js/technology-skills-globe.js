@@ -76,6 +76,7 @@ class TechnologySkillsGlobe {
     this.addGlobe();
     this.addStars();
     this.addTwinkleStars();
+    this.addShootingStars();
     this.themeObserver = new MutationObserver(this.refreshTheme);
     this.themeObserver.observe(document.documentElement, {
       attributes: true,
@@ -162,6 +163,14 @@ class TechnologySkillsGlobe {
       star.material.blending = light ? THREE.NormalBlending : THREE.AdditiveBlending;
       star.material.needsUpdate = true;
     });
+    this.shootingStars?.forEach((shootingStar, index) => {
+      const color = light ? (index % 2 ? 0x5f83ad : 0x8062b5) : (index % 2 ? 0xb9e7ff : 0xe7c6ff);
+      [shootingStar.line.material, shootingStar.head.material].forEach((material) => {
+        material.color.set(color);
+        material.blending = light ? THREE.NormalBlending : THREE.AdditiveBlending;
+        material.needsUpdate = true;
+      });
+    });
     this.links.forEach((link, index) => {
       link.line.material.color.set(
         light ? (index % 2 ? 0x3977b8 : 0x177da8) : index % 2 ? 0x5d86ff : 0x35dcff
@@ -211,7 +220,7 @@ class TechnologySkillsGlobe {
   }
 
   addStars() {
-    const positions = new Float32Array(220 * 3);
+    const positions = new Float32Array(320 * 3);
     for (let index = 0; index < positions.length; index += 3) {
       positions[index] = (Math.random() - 0.5) * 13;
       positions[index + 1] = (Math.random() - 0.5) * 8;
@@ -236,7 +245,7 @@ class TechnologySkillsGlobe {
     const texture = this.twinkleTexture();
     const light = document.documentElement.dataset.theme === "light";
     this.twinkleStars = [];
-    for (let index = 0; index < 30; index += 1) {
+    for (let index = 0; index < 64; index += 1) {
       const star = new THREE.Sprite(
         new THREE.SpriteMaterial({
           map: texture,
@@ -262,6 +271,44 @@ class TechnologySkillsGlobe {
       star.renderOrder = -2;
       this.scene.add(star);
       this.twinkleStars.push(star);
+    }
+  }
+
+  addShootingStars() {
+    const texture = this.twinkleTexture();
+    const light = document.documentElement.dataset.theme === "light";
+    this.shootingStars = [];
+    for (let index = 0; index < 6; index += 1) {
+      const color = light ? (index % 2 ? 0x5f83ad : 0x8062b5) : (index % 2 ? 0xb9e7ff : 0xe7c6ff);
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute("position", new THREE.BufferAttribute(new Float32Array(6), 3));
+      const line = new THREE.Line(
+        geometry,
+        new THREE.LineBasicMaterial({
+          color,
+          transparent: true,
+          opacity: 0,
+          blending: light ? THREE.NormalBlending : THREE.AdditiveBlending,
+          depthTest: false,
+          depthWrite: false,
+        })
+      );
+      const head = new THREE.Sprite(
+        new THREE.SpriteMaterial({
+          map: texture,
+          color,
+          transparent: true,
+          opacity: 0,
+          blending: light ? THREE.NormalBlending : THREE.AdditiveBlending,
+          depthTest: false,
+          depthWrite: false,
+        })
+      );
+      head.scale.set(0.16, 0.16, 1);
+      line.renderOrder = -1;
+      head.renderOrder = -1;
+      this.scene.add(line, head);
+      this.shootingStars.push({ line, head, phase: index * 0.71, speed: 0.09 + (index % 3) * 0.018 });
     }
   }
 
@@ -690,6 +737,26 @@ class TechnologySkillsGlobe {
       const size = star.userData.baseSize * (0.9 + twinkle * 0.18);
       star.scale.set(size, size, 1);
       star.material.opacity = (document.documentElement.dataset.theme === "light" ? 0.42 : 0.78) * twinkle;
+    });
+    this.shootingStars?.forEach((shootingStar) => {
+      const progress = (time * shootingStar.speed + shootingStar.phase) % 1;
+      const travel = progress * 18 - 9;
+      const x = travel;
+      const y = 3.2 - progress * 6.4;
+      const tailLength = 0.95;
+      const positions = shootingStar.line.geometry.attributes.position.array;
+      positions[0] = x;
+      positions[1] = y;
+      positions[2] = -3.25;
+      positions[3] = x - tailLength;
+      positions[4] = y + tailLength * 0.34;
+      positions[5] = -3.25;
+      shootingStar.line.geometry.attributes.position.needsUpdate = true;
+      shootingStar.head.position.set(x, y, -3.25);
+      const visibility = Math.sin(Math.PI * progress);
+      const themeOpacity = document.documentElement.dataset.theme === "light" ? 0.6 : 0.9;
+      shootingStar.line.material.opacity = visibility * themeOpacity;
+      shootingStar.head.material.opacity = visibility * Math.min(1, themeOpacity + 0.12);
     });
     this.renderer.render(this.scene, this.camera);
   }
