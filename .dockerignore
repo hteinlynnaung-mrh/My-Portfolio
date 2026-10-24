@@ -1,0 +1,17 @@
+.git
+.gitignore
+.env*
+node_modules
+.next
+out
+coverage
+vendor
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+Dockerfile*
+compose*.yml
+compose*.yaml
+*.log
+.DS_Store
